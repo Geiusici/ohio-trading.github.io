@@ -1,44 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Gun Skin Values — Market Watch</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gun Skin Values • Nov 27, 2025</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
   <header class="site-header">
     <h1>Gun Skin Values</h1>
     <p class="subtitle">Live worth & demand tracker • Nov 27, 2025</p>
+    
     <div class="controls">
-      <input id="search" placeholder="Search any skin..." autocomplete="off" />
+      <input type="text" id="search" placeholder="Search any skin..." autocomplete="off">
       <select id="sortBy">
-        <option value="worth_desc">Worth (Highest)</option>
-        <option value="worth_asc">Worth (Lowest)</option>
-        <option value="demand_desc">Demand</option>
+        <option value="worth_desc">Worth ↓ (Highest)</option>
+        <option value="worth_asc">Worth ↑ (Lowest)</option>
+        <option value="demand_desc">Demand ↓</option>
         <option value="name_asc">Name A→Z</option>
       </select>
-      <button id="downloadJson">Download JSON</button>
     </div>
   </header>
 
   <main>
-    <section class="table-wrap">
+    <div class="table-wrap">
       <table id="skinsTable">
         <thead>
           <tr>
             <th>Skin Name</th>
-            <th>Worth (Cash)</th>
+            <th>Worth</th>
             <th>Demand /10</th>
           </tr>
         </thead>
-        <tbody></tbody>
+        <tbody>
+          <!-- Filled by JavaScript -->
+        </tbody>
       </table>
-      <p id="empty" class="empty">No skins found.</p>
-    </section>
+    </div>
   </main>
 
-  <!-- Scripts at the end so page loads first -->
+  <!-- Scripts MUST be at the very end -->
   <script src="skins.js"></script>
   <script src="script.js"></script>
 </body>

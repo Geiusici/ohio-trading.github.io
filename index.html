@@ -1,62 +1,45 @@
-let skins = [];
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Gun Skin Values — Market Watch</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <h1>Gun Skin Values</h1>
+    <p class="subtitle">Live worth & demand tracker • Nov 27, 2025</p>
+    <div class="controls">
+      <input id="search" placeholder="Search any skin..." autocomplete="off" />
+      <select id="sortBy">
+        <option value="worth_desc">Worth (Highest)</option>
+        <option value="worth_asc">Worth (Lowest)</option>
+        <option value="demand_desc">Demand</option>
+        <option value="name_asc">Name A→Z</option>
+      </select>
+      <button id="downloadJson">Download JSON</button>
+    </div>
+  </header>
 
-async function loadData() {
-  try {
-    const res = await fetch("skins.json");
-    if (!res.ok) throw 0;
-    skins = await res.json();
-  } catch {
-    console.warn("skins.json not found → using embedded data");
-    skins = embeddedSkins;
-  }
-  render();
-}
+  <main>
+    <section class="table-wrap">
+      <table id="skinsTable">
+        <thead>
+          <tr>
+            <th>Skin Name</th>
+            <th>Worth (Cash)</th>
+            <th>Demand /10</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <p id="empty" class="empty">No skins found.</p>
+    </section>
+  </main>
 
-const formatWorth = n => n >= 1e6 ? (n/1e6).toFixed(1)+"M" : n >= 1e3 ? (n/1e3)+"K" : n;
-
-const tbody = document.querySelector("#skinsTable tbody");
-const searchInput = document.getElementById("search");
-const sortBy = document.getElementById("sortBy");
-const emptyText = document.getElementById("empty");
-
-function render() {
-  let list = skins.slice();
-  const q = searchInput.value.trim().toLowerCase();
-  if (q) list = list.filter(s => s.name.toLowerCase().includes(q));
-
-  switch (sortBy.value) {
-    case "worth_desc": list.sort((a,b) => b.worth - a.worth); break;
-    case "worth_asc":  list.sort((a,b) => a.worth - b.worth); break;
-    case "demand_desc":list.sort((a,b) => parseFloat(b.demand) - parseFloat(a.demand)); break;
-    case "name_asc":   list.sort((a,b) => a.name.localeCompare(b.name)); break;
-  }
-
-  tbody.innerHTML = "";
-  if (!list.length) return emptyText.style.display = "block";
-  emptyText.style.display = "none";
-
-  for (const s of list) {
-    const demandNum = parseFloat(s.demand);
-    const demandClass = demandNum >= 8 ? "high" : demandNum >= 6 ? "med" : demandNum >= 4 ? "low" : "very-low";
-    const row = document.createElement("tr");
-    row.innerHTML = `
-      <td class="skin-name">${s.name}</td>
-      <td class="worth">$${formatWorth(s.worth)}</td>
-      <td class="demand ${demandClass}">${s.demand}/10</td>
-    `;
-    tbody.appendChild(row);
-  }
-}
-
-searchInput.addEventListener("input", render);
-sortBy.addEventListener("change", render);
-
-// Only download button remains
-document.getElementById("downloadJson").onclick = () => {
-  const a = document.createElement("a");
-  a.href = URL.createObjectURL(new Blob([JSON.stringify(skins, null, 2)], {type: "application/json"}));
-  a.download = "skins.json";
-  a.click();
-};
-
-loadData();
+  <!-- Scripts at the end so page loads first -->
+  <script src="skins.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

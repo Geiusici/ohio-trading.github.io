@@ -1,8 +1,6 @@
-// skins.js — FULL & COMPLETE Gun Skin Values • Nov 27, 2025
-// 100% of your list — 758 skins total
-
+// skins.js — 100% FULL & COMPLETE — ALL ? INCLUDED — 758 SKINS — Nov 27, 2025
 const embeddedSkins = [
-  // INVISIBLES
+  // INVISIBLES — ALL 23 (including every ?)
   {"name":"Invisibles AUG","worth":20000000,"demand":"2"},
   {"name":"Invisibles RPG","worth":18000000,"demand":"8"},
   {"name":"Invisibles Barrett","worth":17000000,"demand":"5"},
@@ -13,8 +11,21 @@ const embeddedSkins = [
   {"name":"Invisibles M1","worth":9000000,"demand":"3"},
   {"name":"Invisibles Flamethrower","worth":6000000,"demand":"2"},
   {"name":"Invisibles Python","worth":5000000,"demand":"3"},
+  {"name":"Invisibles Minigun","worth":0,"demand":"?"},
+  {"name":"Invisibles FNFAL","worth":0,"demand":"?"},
+  {"name":"Invisibles AK-47","worth":0,"demand":"?"},
+  {"name":"Invisibles M249 SAW","worth":0,"demand":"?"},
+  {"name":"Invisibles M4A1","worth":0,"demand":"?"},
+  {"name":"Invisibles Tommy Gun","worth":0,"demand":"?"},
+  {"name":"Invisibles Double Barrel","worth":0,"demand":"?"},
+  {"name":"Invisibles RPK","worth":0,"demand":"?"},
+  {"name":"Invisibles Deagle","worth":0,"demand":"?"},
+  {"name":"Invisibles Raygun","worth":0,"demand":"?"},
+  {"name":"Invisibles AR-15","worth":0,"demand":"?"},
+  {"name":"Invisibles M1911","worth":0,"demand":"?"},
+  {"name":"Invisibles USP","worth":0,"demand":"?"},
 
-  // OBSIDIANS
+  // OBSIDIANS — ALL 23
   {"name":"Obsidians Minigun","worth":15000000,"demand":"6"},
   {"name":"Obsidians FNFAL","worth":12500000,"demand":"8"},
   {"name":"Obsidians RPG","worth":12000000,"demand":"7.5"},
@@ -39,7 +50,7 @@ const embeddedSkins = [
   {"name":"Obsidians M1911","worth":2500000,"demand":"1"},
   {"name":"Obsidians USP","worth":2000000,"demand":"1"},
 
-  // DARK MATTER
+  // DARK MATTER — 26
   {"name":"Dark Matter Scar L","worth":300000,"demand":"8"},
   {"name":"Dark Matter P90","worth":260000,"demand":"7"},
   {"name":"Dark Matter RPG","worth":250000,"demand":"6"},
@@ -67,7 +78,7 @@ const embeddedSkins = [
   {"name":"Dark Matter Uzi","worth":120000,"demand":"1"},
   {"name":"Dark Matter Dragunov","worth":120000,"demand":"1"},
 
-  // ANTI MATTER
+  // ANTI MATTER — 26
   {"name":"Anti Matter Scar L","worth":280000,"demand":"7.5"},
   {"name":"Anti Matter P90","worth":240000,"demand":"7"},
   {"name":"Anti Matter RPG","worth":230000,"demand":"6"},
@@ -95,7 +106,7 @@ const embeddedSkins = [
   {"name":"Anti Matter Uzi","worth":120000,"demand":"1"},
   {"name":"Anti Matter Dragunov","worth":120000,"demand":"1"},
 
-  // CRIMSON BLOODS
+  // CRIMSON BLOODS — 13
   {"name":"Crimson Bloods Scar L","worth":320000,"demand":"8"},
   {"name":"Crimson Bloods AUG","worth":275000,"demand":"7.5"},
   {"name":"Crimson Bloods AS Val","worth":245000,"demand":"7"},
@@ -110,11 +121,11 @@ const embeddedSkins = [
   {"name":"Crimson Bloods Glock 18","worth":120000,"demand":"1.5"},
   {"name":"Crimson Bloods AR-15","worth":120000,"demand":"1"},
 
-  // VOID REAPERS
+  // VOID REAPERS — 2
   {"name":"Void Reapers AS Val","worth":250000,"demand":"6"},
   {"name":"Void Reapers Reaper Glock","worth":120000,"demand":"1"},
 
-  // UNDERWORLD
+  // UNDERWORLD — 30
   {"name":"Underworld Scar L","worth":300000,"demand":"9"},
   {"name":"Underworld Fn Fal","worth":250000,"demand":"8.5"},
   {"name":"Underworld RPG","worth":250000,"demand":"8.5"},
@@ -147,7 +158,7 @@ const embeddedSkins = [
   {"name":"Underworld USP-45","worth":48000,"demand":"1"},
   {"name":"Underworld Raygun","worth":80000,"demand":"2"},
 
-  // SOLID GOLDS
+  // SOLID GOLDS — 27
   {"name":"Solid Gold RPG","worth":3900000,"demand":"9"},
   {"name":"Solid Gold AS Val","worth":3600000,"demand":"7"},
   {"name":"Solid Gold AUG","worth":3400000,"demand":"7"},
@@ -176,7 +187,7 @@ const embeddedSkins = [
   {"name":"Solid Gold M1911","worth":420000,"demand":"1"},
   {"name":"Solid Gold USP","worth":400000,"demand":"1"},
 
-  // VOIDS
+  // VOIDS — 28
   {"name":"Void RPG","worth":8500000,"demand":"10"},
   {"name":"Void AS Val","worth":6800000,"demand":"9"},
   {"name":"Void AUG","worth":6500000,"demand":"9"},
@@ -205,7 +216,7 @@ const embeddedSkins = [
   {"name":"Void M1911","worth":475000,"demand":"1"},
   {"name":"Void USP","worth":450000,"demand":"1"},
 
-  // CYBERPUNKS
+  // CYBERPUNKS — 11
   {"name":"Cyberpunk AS Val","worth":4700000,"demand":"10"},
   {"name":"Cyberpunk AUG","worth":4500000,"demand":"10"},
   {"name":"Cyberpunk M4A1","worth":3700000,"demand":"8.5"},
@@ -218,49 +229,41 @@ const embeddedSkins = [
   {"name":"Cyberpunk Glock 18","worth":1500000,"demand":"1.5"},
   {"name":"Cyberpunk Glock","worth":1200000,"demand":"1"},
 
-  // ATOMICS - AMETHYST
+  // ATOMICS — AMETHYST, NATURE, WATER, FLAME
   {"name":"Amethyst RPG","worth":1200000,"demand":"9.5"},
   {"name":"Amethyst AS Val","worth":950000,"demand":"8.5"},
   {"name":"Amethyst M4A1","worth":850000,"demand":"8"},
   {"name":"Amethyst Sawn Off","worth":750000,"demand":"7.5"},
   {"name":"Amethyst Double Barrel","worth":700000,"demand":"7"},
-
-  // ATOMICS - NATURE
   {"name":"Nature RPG","worth":1000000,"demand":"9"},
   {"name":"Nature AS Val","worth":900000,"demand":"9"},
   {"name":"Nature M4A1","worth":800000,"demand":"8"},
   {"name":"Nature Sawn Off","worth":700000,"demand":"8"},
   {"name":"Nature Double Barrel","worth":650000,"demand":"6"},
-
-  // ATOMICS - WATER
   {"name":"Water RPG","worth":950000,"demand":"8.5"},
   {"name":"Water AS Val","worth":850000,"demand":"8"},
   {"name":"Water M4A1","worth":750000,"demand":"7.5"},
   {"name":"Water Sawn Off","worth":650000,"demand":"7"},
   {"name":"Water Double Barrel","worth":600000,"demand":"6"},
-
-  // ATOMICS - FLAME
   {"name":"Flame RPG","worth":900000,"demand":"6.5"},
   {"name":"Flame AS Val","worth":750000,"demand":"6"},
   {"name":"Flame M4A1","worth":650000,"demand":"5"},
   {"name":"Flame Sawn Off","worth":600000,"demand":"4"},
   {"name":"Flame Double Barrel","worth":550000,"demand":"5"},
 
-  // FUTURES - WHITE
+  // FUTURES — WHITE & BLACK
   {"name":"White Future Scar L","worth":800000,"demand":"8"},
   {"name":"White Future Barrett","worth":650000,"demand":"7"},
   {"name":"White Future AK-47","worth":500000,"demand":"6"},
   {"name":"White Future Mossberg","worth":300000,"demand":"2.5"},
   {"name":"White Future Python","worth":250000,"demand":"1.5"},
-
-  // FUTURES - BLACK
   {"name":"Black Future Scar L","worth":750000,"demand":"7.5"},
   {"name":"Black Future Barrett","worth":600000,"demand":"6.5"},
   {"name":"Black Future AK-47","worth":450000,"demand":"5.5"},
   {"name":"Black Future Mossberg","worth":250000,"demand":"2"},
   {"name":"Black Future Python","worth":200000,"demand":"1"},
 
-  // TACTICALS
+  // TACTICALS — 10
   {"name":"Tactical Scar L","worth":1600000,"demand":"10"},
   {"name":"Tactical AUG","worth":800000,"demand":"9"},
   {"name":"Tactical AS Val","worth":750000,"demand":"7.5"},
@@ -272,21 +275,21 @@ const embeddedSkins = [
   {"name":"Tactical Dragunov","worth":235000,"demand":"1"},
   {"name":"Tactical Glock","worth":210000,"demand":"1"},
 
-  // REAPERS
+  // REAPERS — 5
   {"name":"Reaper AS Val","worth":350000,"demand":"7"},
   {"name":"Reaper M4A1","worth":285000,"demand":"6"},
   {"name":"Reaper AK-47","worth":255000,"demand":"4.5"},
   {"name":"Reaper Barrett M107","worth":265000,"demand":"3.5"},
   {"name":"Reaper Glock","worth":145000,"demand":"1"},
 
-  // STEAMPUNKS
+  // STEAMPUNKS — 5
   {"name":"Steampunk Scar L","worth":600000,"demand":"8.5"},
   {"name":"Steampunk Sawn Off","worth":360000,"demand":"7"},
   {"name":"Steampunk MP7","worth":310000,"demand":"6"},
   {"name":"Steampunk Tommy Gun","worth":350000,"demand":"7"},
   {"name":"Steampunk Double Barrel","worth":260000,"demand":"5"},
 
-  // SUBZEROS
+  // SUBZEROS & FROZEN GOLDS — 10
   {"name":"Subzero AS Val","worth":300000,"demand":"6"},
   {"name":"Subzero Barrett M107","worth":255000,"demand":"4.5"},
   {"name":"Subzero M4A1","worth":290000,"demand":"7.5"},
@@ -298,14 +301,14 @@ const embeddedSkins = [
   {"name":"Frozen Gold RPG","worth":450000,"demand":"9"},
   {"name":"Frozen Gold Deagle","worth":250000,"demand":"6"},
 
-  // ELITES
+  // ELITES — 5
   {"name":"Elite Scar-L","worth":450000,"demand":"9"},
   {"name":"Elite AS Val","worth":350000,"demand":"7"},
   {"name":"Elite AUG","worth":370000,"demand":"8"},
   {"name":"Elite M4A1","worth":320000,"demand":"7.5"},
   {"name":"Elite Barrett","worth":240000,"demand":"5"},
 
-  // SAKURAS
+  // SAKURAS & DEATH BLOSSOMS — 10
   {"name":"Sakura AS Val","worth":250000,"demand":"7"},
   {"name":"Sakura Barrett","worth":200000,"demand":"5.5"},
   {"name":"Sakura Tommy Gun","worth":230000,"demand":"6.5"},
@@ -317,14 +320,14 @@ const embeddedSkins = [
   {"name":"Death Blossom Uzi","worth":175000,"demand":"3"},
   {"name":"Death Blossom Python","worth":145000,"demand":"1"},
 
-  // WASTELANDS
+  // WASTELANDS — 5
   {"name":"Wasteland AS Val","worth":185000,"demand":"5"},
   {"name":"Wasteland MP7","worth":165000,"demand":"4"},
   {"name":"Wasteland Tommy Gun","worth":135000,"demand":"4"},
   {"name":"Wasteland AK-47","worth":125000,"demand":"3"},
   {"name":"Wasteland Double Barrel","worth":125000,"demand":"3"},
 
-  // MYSTICS
+  // MYSTICS & VOID MYSTICS — 10
   {"name":"Mystic AUG","worth":175000,"demand":"7"},
   {"name":"Mystic AS Val","worth":155000,"demand":"7"},
   {"name":"Mystic Barrett","worth":140000,"demand":"5"},
@@ -336,7 +339,7 @@ const embeddedSkins = [
   {"name":"Void Mystic AK-47","worth":170000,"demand":"6"},
   {"name":"Void Mystic M249 SAW","worth":155000,"demand":"5"},
 
-  // PIRATES
+  // PIRATES — 12
   {"name":"Pirate Scar-L","worth":425000,"demand":"9"},
   {"name":"Pirate Sawn Off","worth":200000,"demand":"5"},
   {"name":"Pirate RPK","worth":180000,"demand":"2"},
@@ -350,21 +353,21 @@ const embeddedSkins = [
   {"name":"Cannon RPG","worth":325000,"demand":"6"},
   {"name":"Gold Cannon RPG","worth":500000,"demand":"7.5"},
 
-  // BIOHAZARDS
+  // BIOHAZARDS — 5
   {"name":"Biohazard AS Val","worth":190000,"demand":"7"},
   {"name":"Biohazard Barrett M107","worth":175000,"demand":"6"},
   {"name":"Biohazard AUG","worth":185000,"demand":"7"},
   {"name":"Biohazard Tommy Gun","worth":160000,"demand":"6"},
   {"name":"Biohazard MP7","worth":155000,"demand":"5.5"},
 
-  // VOID NIGHTMARES
+  // VOID NIGHTMARES — 5
   {"name":"Void Nightmare RPG","worth":250000,"demand":"7.5"},
   {"name":"Void Nightmare Scar L","worth":235000,"demand":"8"},
   {"name":"Void Nightmare AUG","worth":200000,"demand":"6.5"},
   {"name":"Void Nightmare P90","worth":190000,"demand":"6"},
   {"name":"Void Nightmare Barrett M107","worth":170000,"demand":"4"},
 
-  // WW2
+  // WW2 — 10
   {"name":"WW2 RPG","worth":250000,"demand":"7"},
   {"name":"WW2 P90","worth":260000,"demand":"8"},
   {"name":"WW2 M249 SAW","worth":160000,"demand":"6"},
@@ -376,7 +379,7 @@ const embeddedSkins = [
   {"name":"Prestige Barrett","worth":220000,"demand":"5"},
   {"name":"Prestige M1911","worth":130000,"demand":"1"},
 
-  // GINGERBREADS
+  // GINGERBREADS — 6
   {"name":"Gingerbread RPG","worth":240000,"demand":"6"},
   {"name":"Gingerbread Scar L","worth":220000,"demand":"5.5"},
   {"name":"Gingerbread AS Val","worth":190000,"demand":"5"},
@@ -384,7 +387,7 @@ const embeddedSkins = [
   {"name":"Gingerbread P90","worth":185000,"demand":"4.5"},
   {"name":"Gingerbread Barrett","worth":170000,"demand":"3"},
 
-  // FREEZE RAYS & VOID RAYS
+  // FREEZE RAYS & VOID RAYS — 10
   {"name":"Freeze Ray RPG","worth":210000,"demand":"6"},
   {"name":"Freeze Ray Scar L","worth":200000,"demand":"6"},
   {"name":"Freeze Ray AUG","worth":180000,"demand":"5"},
@@ -396,14 +399,14 @@ const embeddedSkins = [
   {"name":"Void Ray P90","worth":230000,"demand":"5.5"},
   {"name":"Void Ray MP7","worth":200000,"demand":"5"},
 
-  // FROZEN DIAMONDS
+  // FROZEN DIAMONDS — 5
   {"name":"Frozen Diamond RPG","worth":1500000,"demand":"8"},
   {"name":"Frozen Diamond Scar L","worth":1400000,"demand":"7"},
   {"name":"Frozen Diamond AUG","worth":1300000,"demand":"6"},
   {"name":"Frozen Diamond P90","worth":1000000,"demand":"6"},
   {"name":"Frozen Diamond MP7","worth":900000,"demand":"5"},
 
-  // HYPERLASERS
+  // HYPERLASERS — 15
   {"name":"Hyperlaser Scar L","worth":260000,"demand":"8"},
   {"name":"Hyperlaser RPG","worth":240000,"demand":"7.5"},
   {"name":"Hyperlaser AS Val","worth":210000,"demand":"7"},
@@ -420,7 +423,7 @@ const embeddedSkins = [
   {"name":"Voidlaser M4A1","worth":460000,"demand":"5"},
   {"name":"Voidlaser Mossberg","worth":350000,"demand":"2.5"},
 
-  // ROSES
+  // ROSES — 10
   {"name":"Rose Scar L","worth":230000,"demand":"7"},
   {"name":"Rose RPG","worth":250000,"demand":"7.5"},
   {"name":"Rose M1 Garand","worth":165000,"demand":"3.5"},
@@ -432,7 +435,7 @@ const embeddedSkins = [
   {"name":"Black Rose Dragunov","worth":200000,"demand":"3.5"},
   {"name":"Black Rose P90","worth":250000,"demand":"6"},
 
-  // LUCKY CLOVERS
+  // LUCKY CLOVERS — 10
   {"name":"Lucky Clover RPK","worth":195000,"demand":"5"},
   {"name":"Lucky Clover P90","worth":200000,"demand":"6"},
   {"name":"Lucky Clover Scar L","worth":240000,"demand":"7.5"},
@@ -444,7 +447,7 @@ const embeddedSkins = [
   {"name":"Fortune Favor RPG","worth":330000,"demand":"8"},
   {"name":"Fortune Favor FN Fal","worth":350000,"demand":"9"},
 
-  // PIXEL
+  // PIXEL — 12
   {"name":"Pixel RPG","worth":220000,"demand":"6"},
   {"name":"Pixel Scar L","worth":250000,"demand":"7"},
   {"name":"Pixel FN Fal","worth":200000,"demand":"6"},
@@ -458,7 +461,7 @@ const embeddedSkins = [
   {"name":"Diamond Pixel P90","worth":300000,"demand":"7"},
   {"name":"Diamond Pixel Barrett M107","worth":250000,"demand":"6"},
 
-  // TACTICAL V3
+  // TACTICAL V3 — 7
   {"name":"Tactical V3 P90","worth":550000,"demand":"7"},
   {"name":"Tactical V3 RPG","worth":370000,"demand":"8"},
   {"name":"Tactical V3 FN Fal","worth":350000,"demand":"8"},
@@ -467,14 +470,14 @@ const embeddedSkins = [
   {"name":"Tactical V3 RPK","worth":240000,"demand":"5"},
   {"name":"Tactical V3 Deagle","worth":180000,"demand":"4.5"},
 
-  // PATRIOT
+  // PATRIOT — 5
   {"name":"Patriot Scar","worth":250000,"demand":"7"},
   {"name":"Patriot AS Val","worth":215000,"demand":"5.5"},
   {"name":"Patriot P90","worth":200000,"demand":"5"},
   {"name":"Patriot AWP","worth":210000,"demand":"6"},
   {"name":"Patriot M1 Garand","worth":190000,"demand":"4.5"},
 
-  // DIAMOND
+  // DIAMOND — 9
   {"name":"Diamond RPG","worth":520000,"demand":"8"},
   {"name":"Diamond Scar-L","worth":480000,"demand":"9"},
   {"name":"Diamond AS Val","worth":400000,"demand":"7.5"},
@@ -485,7 +488,7 @@ const embeddedSkins = [
   {"name":"Diamond Python","worth":120000,"demand":"2"},
   {"name":"Diamond Glock","worth":110000,"demand":"3"},
 
-  // RUBY
+  // RUBY — 17
   {"name":"Ruby Scar L","worth":300000,"demand":"9.5"},
   {"name":"Ruby RPG","worth":330000,"demand":"8"},
   {"name":"Ruby AS Val","worth":270000,"demand":"7.5"},
@@ -504,7 +507,7 @@ const embeddedSkins = [
   {"name":"Ruby Python","worth":30000,"demand":"1"},
   {"name":"Ruby Glock","worth":22000,"demand":"2"},
 
-  // SAPPHIRE
+  // SAPPHIRE — 17
   {"name":"Sapphire Scar L","worth":225000,"demand":"8"},
   {"name":"Sapphire RPG","worth":180000,"demand":"7.5"},
   {"name":"Sapphire AS Val","worth":150000,"demand":"6"},
@@ -523,7 +526,7 @@ const embeddedSkins = [
   {"name":"Sapphire Python","worth":20000,"demand":"1"},
   {"name":"Sapphire Glock","worth":15000,"demand":"1.5"},
 
-  // EMERALD
+  // EMERALD — 17
   {"name":"Emerald Scar L","worth":215000,"demand":"7.5"},
   {"name":"Emerald RPG","worth":165000,"demand":"6.5"},
   {"name":"Emerald AS Val","worth":135000,"demand":"5"},
@@ -542,7 +545,7 @@ const embeddedSkins = [
   {"name":"Emerald Python","worth":15000,"demand":"1"},
   {"name":"Emerald Glock","worth":10000,"demand":"2"},
 
-  // AMETHYST
+  // AMETHYST — 17
   {"name":"Amethyst Scar L","worth":200000,"demand":"7"},
   {"name":"Amethyst RPG","worth":160000,"demand":"6.5"},
   {"name":"Amethyst AS Val","worth":120000,"demand":"5"},
@@ -561,7 +564,7 @@ const embeddedSkins = [
   {"name":"Amethyst Python","worth":14000,"demand":"1"},
   {"name":"Amethyst Glock","worth":10000,"demand":"1.5"},
 
-  // TOPAZ
+  // TOPAZ — 17
   {"name":"Topaz Scar L","worth":180000,"demand":"6.5"},
   {"name":"Topaz RPG","worth":145000,"demand":"6"},
   {"name":"Topaz AS Val","worth":110000,"demand":"4.5"},
@@ -580,13 +583,13 @@ const embeddedSkins = [
   {"name":"Topaz Python","worth":15000,"demand":"1"},
   {"name":"Topaz Glock","worth":10000,"demand":"1.5"},
 
-  // DOLLAR & HEART
+  // DOLLAR & HEART — 4
   {"name":"Dollar Scar L","worth":350000,"demand":"8"},
   {"name":"Dollar AS Val","worth":240000,"demand":"6.5"},
   {"name":"Heart Scar L","worth":75000,"demand":"4"},
   {"name":"Heart AS Val","worth":40000,"demand":"3"},
 
-  // EASTER EGG
+  // EASTER EGG — 24
   {"name":"Easter Egg RPG","worth":175000,"demand":"5.5"},
   {"name":"Easter Egg AS Val","worth":145000,"demand":"4"},
   {"name":"Easter Egg AUG","worth":135000,"demand":"4.5"},
@@ -614,7 +617,7 @@ const embeddedSkins = [
   {"name":"Easter Egg M1991","worth":20000,"demand":"1"},
   {"name":"Easter Egg USP 45","worth":20000,"demand":"1"},
 
-  // HOTDOGS
+  // HOTDOGS — 28
   {"name":"Freedom RPG","worth":1500000,"demand":"8"},
   {"name":"Hotdogs RPG","worth":350000,"demand":"8"},
   {"name":"Hotdogs AS Val","worth":240000,"demand":"7"},
@@ -644,7 +647,7 @@ const embeddedSkins = [
   {"name":"Hotdogs M1991","worth":65000,"demand":"1"},
   {"name":"Hotdogs USP 45","worth":60000,"demand":"1"},
 
-  // WHITE, RED, BLUE, USA, FIREWORK, STARRY
+  // WHITE, RED, BLUE, USA, FIREWORK, STARRY — 6
   {"name":"White RPG","worth":180000,"demand":"9"},
   {"name":"Red RPG","worth":150000,"demand":"9"},
   {"name":"Blue RPG","worth":150000,"demand":"9"},
@@ -652,7 +655,7 @@ const embeddedSkins = [
   {"name":"Firework RPG","worth":85000,"demand":"9"},
   {"name":"Starry RPG","worth":80000,"demand":"9"},
 
-  // HALLOWEEN 2023
+  // HALLOWEEN 2023 — 30
   {"name":"Pumpkin RPG","worth":900000,"demand":"9.5"},
   {"name":"Skin Melter Double Barrel","worth":425000,"demand":"5.5"},
   {"name":"Skin Melter Mossberg","worth":325000,"demand":"3"},
@@ -684,7 +687,7 @@ const embeddedSkins = [
   {"name":"Halloween 2023 USP45","worth":48000,"demand":"1"},
   {"name":"Halloween 2023 Raygun","worth":80000,"demand":"5"},
 
-  // TOYS
+  // TOYS — 14
   {"name":"Toys AUG","worth":1800000,"demand":"10"},
   {"name":"Toys AS Val","worth":850000,"demand":"8"},
   {"name":"Toys Barrett M107","worth":670000,"demand":"7"},
@@ -700,7 +703,7 @@ const embeddedSkins = [
   {"name":"Toys Mossberg","worth":300000,"demand":"3"},
   {"name":"Toys Python","worth":270000,"demand":"2"},
 
-  // HALLOWEEN 2024
+  // HALLOWEEN 2024 — 35+
   {"name":"Cursed Pumpkin RPG","worth":500000,"demand":"6"},
   {"name":"Void Reaper Barrett M107","worth":200000,"demand":"4.5"},
   {"name":"Void Reaper M4A1","worth":225000,"demand":"5.5"},
@@ -738,7 +741,7 @@ const embeddedSkins = [
   {"name":"White Ghost USP 45","worth":24000,"demand":"0"},
   {"name":"White Ghost Raygun","worth":40000,"demand":"2.5"},
 
-  // XMAS 2024
+  // XMAS 2024 — 35+
   {"name":"Solid Gold Scar","worth":700000,"demand":"8.5"},
   {"name":"Solid Gold AUG","worth":575000,"demand":"7.5"},
   {"name":"Solid Gold AS Val","worth":550000,"demand":"7"},
@@ -778,7 +781,7 @@ const embeddedSkins = [
   {"name":"Frozen Gold Scar L","worth":350000,"demand":"8"},
   {"name":"Frozen Gold Garand","worth":200000,"demand":"7"},
 
-  // 4TH OF JULY 2025
+  // 4TH OF JULY 2025 — 7
   {"name":"Rainbow Firework RPG","worth":450000,"demand":"7"},
   {"name":"Solid Gold V2 P90","worth":280000,"demand":"5"},
   {"name":"Solid Gold V2 RPG","worth":320000,"demand":"6.5"},
@@ -788,39 +791,39 @@ const embeddedSkins = [
   {"name":"Solid Gold V2 RPK","worth":220000,"demand":"3"},
   {"name":"Solid Gold V2 Deagle","worth":180000,"demand":"3"},
 
-  // ST PATRICK
+  // ST PATRICK — 2
   {"name":"St Patrick Tommy Gun","worth":850000,"demand":"7"},
   {"name":"St Patrick Python","worth":400000,"demand":"3.5"},
 
-  // HOLY FIRE
+  // HOLY FIRE — 5
   {"name":"Holy Fire AS Val","worth":250000,"demand":"5.5"},
   {"name":"Holy Fire M4A1","worth":180000,"demand":"4"},
   {"name":"Holy Fire Barrett M107","worth":170000,"demand":"3"},
   {"name":"Holy Fire AK 47","worth":160000,"demand":"5"},
   {"name":"Holy Fire Glock","worth":75000,"demand":"1"},
 
-  // BLOODY HEART
+  // BLOODY HEART — 5
   {"name":"Bloody Heart AS Val","worth":230000,"demand":"7.5"},
   {"name":"Bloody Heart Tommy Gun","worth":190000,"demand":"6.5"},
   {"name":"Bloody Heart Barrett M107","worth":160000,"demand":"5.5"},
   {"name":"Bloody Heart Uzi","worth":110000,"demand":"4"},
   {"name":"Bloody Heart Python","worth":70000,"demand":"3"},
 
-  // FALLOUT
+  // FALLOUT — 5
   {"name":"Fallout RPG","worth":215000,"demand":"6"},
   {"name":"Fallout P90","worth":200000,"demand":"6.5"},
   {"name":"Fallout M249 SAW","worth":120000,"demand":"5"},
   {"name":"Fallout Barrett M107","worth":110000,"demand":"3"},
   {"name":"Fallout M1911","worth":35000,"demand":"1"},
 
-  // ATOMIC PUMPKIN
+  // ATOMIC PUMPKIN — 5
   {"name":"Atomic Pumpkin RPG","worth":450000,"demand":"9"},
   {"name":"Atomic Pumpkin AS Val","worth":400000,"demand":"8.5"},
   {"name":"Atomic Pumpkin M4A1","worth":350000,"demand":"7"},
   {"name":"Atomic Pumpkin Sawn Off","worth":230000,"demand":"6"},
   {"name":"Atomic Pumpkin Double Barrel","worth":200000,"demand":"5.5"},
 
-  // ETHEREAL
+  // ETHEREAL — 14
   {"name":"Ethereal Scar L","worth":320000,"demand":"9"},
   {"name":"Ethereal M4A1","worth":240000,"demand":"7"},
   {"name":"Ethereal RPK","worth":180000,"demand":"6"},
@@ -836,7 +839,7 @@ const embeddedSkins = [
   {"name":"Ethereal Glock","worth":45000,"demand":"1"},
   {"name":"Ethereal M1911","worth":35000,"demand":"1"},
 
-  // SPECTRAL
+  // SPECTRAL — 17
   {"name":"Spectral Scar L","worth":300000,"demand":"8.5"},
   {"name":"Spectral FN FAL","worth":235000,"demand":"7"},
   {"name":"Spectral RPG","worth":270000,"demand":"8"},
@@ -855,7 +858,7 @@ const embeddedSkins = [
   {"name":"Spectral Glock 18","worth":60000,"demand":"2"},
   {"name":"Spectral Glock","worth":40000,"demand":"1"},
 
-  // BALLOONS
+  // BALLOONS — 10
   {"name":"Balloons Dollar","worth":14000000,"demand":"9"},
   {"name":"Balloons Heart","worth":850000,"demand":"8"},
   {"name":"Balloons Clover","worth":750000,"demand":"8"},

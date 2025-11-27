@@ -1,42 +1,9 @@
 [
-  {
-    "name": "Galaxy Reaper",
-    "worth": 2500,
-    "demand": "Very High",
-    "rarity": "legend",
-    "notes": "Collector favorite",
-    "image": ""
-  },
-  {
-    "name": "Crimson Fury",
-    "worth": 1200,
-    "demand": "High",
-    "rarity": "epic",
-    "notes": "Popular in comp play",
-    "image": ""
-  },
-  {
-    "name": "Neon Viper",
-    "worth": 850,
-    "demand": "Medium",
-    "rarity": "rare",
-    "notes": "Colorful and visible",
-    "image": ""
-  },
-  {
-    "name": "Ghost Iron",
-    "worth": 300,
-    "demand": "Low",
-    "rarity": "common",
-    "notes": "Budget option",
-    "image": ""
-  },
-  {
-    "name": "Urban Camo X",
-    "worth": 150,
-    "demand": "Low",
-    "rarity": "common",
-    "notes": "Cheap camo skin",
-    "image": ""
-  }
-]
+  {"name": "Invisibles AUG", "worth": 20000, "demand": "2"},
+  {"name": "Invisibles RPG", "worth": 18000, "demand": "8"},
+  {"name": "Invisibles Barrett", "worth": 17000, "demand": "5"},
+  {"name": "Invisibles AS Val", "worth": 15000, "demand": "7"},
+  {"name": "Invisibles P90", "worth": 15000, "demand": "7"},
+  {"name": "Invisibles Scar", "worth": 15000, "demand": "7"}
+  ]
+

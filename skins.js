@@ -230,26 +230,26 @@ const embeddedSkins = [
   {"name":"Cyberpunk Glock","worth":1200000,"demand":"1"},
 
   // ATOMICS — AMETHYST, NATURE, WATER, FLAME
-  {"name":"Amethyst RPG","worth":1200000,"demand":"9.5"},
-  {"name":"Amethyst AS Val","worth":950000,"demand":"8.5"},
-  {"name":"Amethyst M4A1","worth":850000,"demand":"8"},
-  {"name":"Amethyst Sawn Off","worth":750000,"demand":"7.5"},
-  {"name":"Amethyst Double Barrel","worth":700000,"demand":"7"},
-  {"name":"Nature RPG","worth":1000000,"demand":"9"},
-  {"name":"Nature AS Val","worth":900000,"demand":"9"},
-  {"name":"Nature M4A1","worth":800000,"demand":"8"},
-  {"name":"Nature Sawn Off","worth":700000,"demand":"8"},
-  {"name":"Nature Double Barrel","worth":650000,"demand":"6"},
-  {"name":"Water RPG","worth":950000,"demand":"8.5"},
-  {"name":"Water AS Val","worth":850000,"demand":"8"},
-  {"name":"Water M4A1","worth":750000,"demand":"7.5"},
-  {"name":"Water Sawn Off","worth":650000,"demand":"7"},
-  {"name":"Water Double Barrel","worth":600000,"demand":"6"},
-  {"name":"Flame RPG","worth":900000,"demand":"6.5"},
-  {"name":"Flame AS Val","worth":750000,"demand":"6"},
-  {"name":"Flame M4A1","worth":650000,"demand":"5"},
-  {"name":"Flame Sawn Off","worth":600000,"demand":"4"},
-  {"name":"Flame Double Barrel","worth":550000,"demand":"5"},
+  {"name":"Atomic Amethyst RPG","worth":1200000,"demand":"9.5"},
+  {"name":"Atomic Amethyst AS Val","worth":950000,"demand":"8.5"},
+  {"name":"Atomic Amethyst M4A1","worth":850000,"demand":"8"},
+  {"name":"Atomic Amethyst Sawn Off","worth":750000,"demand":"7.5"},
+  {"name":"Atomic Amethyst Double Barrel","worth":700000,"demand":"7"},
+  {"name":"Atomic Nature RPG","worth":1000000,"demand":"9"},
+  {"name":"Atomic Nature AS Val","worth":900000,"demand":"9"},
+  {"name":"Atomic Nature M4A1","worth":800000,"demand":"8"},
+  {"name":"Atomic Nature Sawn Off","worth":700000,"demand":"8"},
+  {"name":"Atomic Nature Double Barrel","worth":650000,"demand":"6"},
+  {"name":"Atomic Water RPG","worth":950000,"demand":"8.5"},
+  {"name":"Atomic Water AS Val","worth":850000,"demand":"8"},
+  {"name":"Atomic Water M4A1","worth":750000,"demand":"7.5"},
+  {"name":"Atomic Water Sawn Off","worth":650000,"demand":"7"},
+  {"name":"Atomic Water Double Barrel","worth":600000,"demand":"6"},
+  {"name":"Atomic Flame RPG","worth":900000,"demand":"6.5"},
+  {"name":"Atomic Flame AS Val","worth":750000,"demand":"6"},
+  {"name":"Atomic Flame M4A1","worth":650000,"demand":"5"},
+  {"name":"Atomic Flame Sawn Off","worth":600000,"demand":"4"},
+  {"name":"Atomic Flame Double Barrel","worth":550000,"demand":"5"},
 
   // FUTURES — WHITE & BLACK
   {"name":"White Future Scar L","worth":800000,"demand":"8"},
@@ -870,4 +870,5 @@ const embeddedSkins = [
   {"name":"Balloon Void Rose","worth":15000000,"demand":"10+"},
   {"name":"Spectral Scythe","worth":0,"demand":"9"}
 ];
+
 

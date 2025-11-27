@@ -3,36 +3,45 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Gun Skin Values • Nov 27, 2025</title>
+  <title>Gun Skin Values • Market Tracker</title>
   <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
   <header class="header">
-    <div class="logo">🔥 GUN SKIN VALUES</div>
-    <p class="tagline">Live Tracker • November 27, 2025</p>
-    <div class="controls">
-      <input type="text" id="search" placeholder="🔍 Search skins..." autocomplete="off">
-      <select id="sortBy">
-        <option value="worth_desc">💰 Highest Value</option>
-        <option value="worth_asc">💸 Lowest Value</option>
-        <option value="demand_desc">🔥 Highest Demand</option>
-        <option value="name_asc">📝 A → Z</option>
-      </select>
+    <div class="header-content">
+      <h1>Gun Skin Market Tracker</h1>
+      <p class="subtitle">Real-time values & demand • Updated November 27, 2025</p>
+      <div class="controls">
+        <input type="text" id="search" placeholder="Search skins..." autocomplete="off">
+        <select id="sortBy">
+          <option value="worth_desc">Highest Value</option>
+          <option value="worth_asc">Lowest Value</option>
+          <option value="demand_desc">Highest Demand</option>
+          <option value="name_asc">Name A-Z</option>
+        </select>
+      </div>
     </div>
   </header>
 
   <main class="container">
-    <table id="skinsTable">
-      <thead>
-        <tr>
-          <th>Skin Name</th>
-          <th>Value</th>
-          <th>Demand</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
+    <div class="table-container">
+      <table id="skinsTable">
+        <thead>
+          <tr>
+            <th>Skin Name</th>
+            <th>Value</th>
+            <th>Demand</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
   </main>
+
+  <footer class="footer">
+    <p>Gun Skin Values • Community-Driven Market Data</p>
+  </footer>
 
   <script src="skins.js"></script>
   <script src="script.js"></script>

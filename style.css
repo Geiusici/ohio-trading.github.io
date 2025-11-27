@@ -1,15 +1,14 @@
 :root {
-  --bg-color: #1e1e2f;
-  --card-bg: #2c2c3e;
-  --accent-color: #ff6b6b;
-  --text-color: #ffffff;
-  --subtext-color: #aaa;
-  --high-demand: #4caf50;
-  --med-demand: #ffb300;
-  --low-demand: #f44336;
-  --unrated-color: #888;
-  --table-hover: #3a3a4d;
-  --header-gradient: linear-gradient(90deg, #ff6b6b, #f06595);
+  --bg-color: #0a0a0a;       /* black background */
+  --card-bg: #111111;         /* dark card/table background */
+  --text-color: #ffffff;      /* neon white text */
+  --subtext-color: #aaaaaa;   /* dim neon for subtitles */
+  --accent-color: #00ffff;    /* neon cyan for values/highlights */
+  --high-demand: #00ff00;     /* neon green for high demand */
+  --med-demand: #ffff00;      /* neon yellow for medium demand */
+  --low-demand: #ff00ff;      /* neon magenta for low demand */
+  --unrated-color: #888888;   /* gray for unrated */
+  --table-hover: #222222;     /* slightly lighter row hover */
 }
 
 body {
@@ -21,23 +20,26 @@ body {
 }
 
 .header {
-  background: var(--header-gradient);
-  color: #fff;
+  background-color: #000000;
+  border-bottom: 2px solid var(--accent-color);
+  color: var(--text-color);
   padding: 2rem 1rem;
   text-align: center;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  text-shadow: 0 0 8px var(--accent-color);
 }
 
 .header h1 {
   margin: 0;
   font-size: 2.2rem;
-  letter-spacing: 1px;
+  letter-spacing: 2px;
+  text-shadow: 0 0 10px var(--accent-color), 0 0 20px var(--accent-color);
 }
 
 .header .subtitle {
   margin: 0.5rem 0 1rem;
   font-weight: 400;
   color: var(--subtext-color);
+  text-shadow: 0 0 6px var(--subtext-color);
 }
 
 .controls {
@@ -52,15 +54,19 @@ body {
 .controls select {
   padding: 0.5rem 1rem;
   border-radius: 8px;
-  border: none;
-  outline: none;
+  border: 1px solid var(--accent-color);
+  background-color: #000;
+  color: var(--text-color);
   font-size: 1rem;
+  outline: none;
   transition: all 0.2s ease;
+  box-shadow: 0 0 6px var(--accent-color);
 }
 
 .controls input:focus,
 .controls select:focus {
-  box-shadow: 0 0 8px var(--accent-color);
+  box-shadow: 0 0 12px var(--accent-color);
+  border-color: var(--accent-color);
 }
 
 .container {
@@ -72,7 +78,7 @@ body {
 .table-container {
   overflow-x: auto;
   border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  box-shadow: 0 0 15px var(--accent-color);
   background-color: var(--card-bg);
 }
 
@@ -83,7 +89,8 @@ table {
 }
 
 thead {
-  background-color: #3a3a4d;
+  background-color: #111111;
+  border-bottom: 1px solid var(--accent-color);
 }
 
 thead th {
@@ -91,58 +98,70 @@ thead th {
   text-align: left;
   font-weight: 600;
   letter-spacing: 0.5px;
+  color: var(--accent-color);
+  text-shadow: 0 0 6px var(--accent-color);
 }
 
 tbody tr {
-  border-bottom: 1px solid #444;
+  border-bottom: 1px solid #222222;
   transition: background 0.2s ease;
 }
 
 tbody tr:hover {
-  background-color: var(--table-hover);
+  background-color: #222222;
+  box-shadow: 0 0 8px var(--accent-color) inset;
 }
 
 tbody td {
   padding: 0.8rem 1rem;
+  color: var(--text-color);
 }
 
 .value {
   color: var(--accent-color);
   font-weight: 500;
+  text-shadow: 0 0 6px var(--accent-color);
 }
 
 .unrated {
   color: var(--unrated-color);
   font-style: italic;
+  text-shadow: 0 0 4px var(--unrated-color);
 }
 
 .demand.high {
   color: var(--high-demand);
   font-weight: 600;
+  text-shadow: 0 0 8px var(--high-demand);
   animation: pulse 1.5s infinite alternate;
 }
 
 .demand.med {
   color: var(--med-demand);
   font-weight: 500;
+  text-shadow: 0 0 6px var(--med-demand);
 }
 
 .demand.low {
   color: var(--low-demand);
   font-weight: 500;
+  text-shadow: 0 0 6px var(--low-demand);
 }
 
 .demand.unknown {
   color: var(--subtext-color);
   font-style: italic;
+  text-shadow: 0 0 4px var(--subtext-color);
 }
 
 .footer {
   text-align: center;
   padding: 2rem 1rem;
-  background-color: #2c2c3e;
+  background-color: #000;
+  border-top: 2px solid var(--accent-color);
   color: var(--subtext-color);
   font-size: 0.9rem;
+  text-shadow: 0 0 6px var(--subtext-color);
 }
 
 /* Animations */

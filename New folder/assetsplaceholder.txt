@@ -1,5 +1,0 @@
-Drop preview image files here. Example filenames:
-- galaxy-reaper.jpg
-- crimson-fury.png
-
-Then set the "image" key in skins.json to "assets/galaxy-reaper.jpg" etc.

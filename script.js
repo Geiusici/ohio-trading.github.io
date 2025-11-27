@@ -1,23 +1,25 @@
 let skins = [];
 
+// Load data — will always work thanks to embeddedSkins in skins.js
 async function loadData() {
   try {
     const res = await fetch("skins.json");
-    if (!res.ok) throw 0;
-    skins = await res.json();
-  } catch {
-    console.warn("skins.json not found → using embedded data from skins.js");
-    skins = embeddedSkins; // ← this comes from skins.js
+    if (res.ok) skins = await res.json();
+  } catch (e) {
+    // Silently fall back to embedded data
+  } finally {
+    if (skins.length === 0 && typeof embeddedSkins !== "undefined") {
+      skins = embeddedSkins;
+    }
+    render();
   }
-  render();
 }
 
 const formatWorth = n => n >= 1e6 ? (n/1e6).toFixed(1)+"M" : n >= 1e3 ? Math.floor(n/1e3)+"K" : n;
 
-const tbody      = document.querySelector("#skinsTable tbody");
+const tbody       = document.querySelector("#skinsTable tbody");
 const searchInput = document.getElementById("search");
-const sortBy     = document.getElementById("sortBy");
-const emptyText  = document.getElementById("empty");
+const sortBy      = document.getElementById("sortBy");
 
 function render() {
   let list = skins.slice();
@@ -35,12 +37,6 @@ function render() {
   }
 
   tbody.innerHTML = "";
-  if (list.length === 0) {
-    emptyText.style.display = "block";
-    return;
-  }
-  emptyText.style.display = "none";
-
   for (const s of list) {
     const demandNum = parseFloat(s.demand);
     const demandClass = demandNum >= 8 ? "high" : demandNum >= 6 ? "med" : demandNum >= 4 ? "low" : "very-low";
@@ -55,20 +51,9 @@ function render() {
   }
 }
 
-// Events
+// Live search & sort
 searchInput.addEventListener("input", render);
 sortBy.addEventListener("change", render);
 
-// Download button
-document.getElementById("downloadJson").onclick = () => {
-  const blob = new Blob([JSON.stringify(skins, null, 2)], {type: "application/json"});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "skins.json";
-  a.click();
-  URL.revokeObjectURL(url);
-};
-
-// Start everything
+// Start
 loadData();

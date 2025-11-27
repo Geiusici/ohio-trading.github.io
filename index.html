@@ -9,7 +9,8 @@
 <body>
   <header class="site-header">
     <h1>Gun Skin Values</h1>
-    <p class="subtitle">Worth, demand & quick market snapshot</p>
+    <p class="subtitle">Worth & demand tracker</p>
+
     <div class="controls">
       <input id="search" placeholder="Search name..." />
       <select id="filterDemand">
@@ -32,15 +33,13 @@
 
   <main>
     <section class="table-wrap">
-      <table id="skinsTable" aria-label="Gun skin values">
+      <table id="skinsTable">
         <thead>
           <tr>
-            <th>Preview</th>
             <th>Name</th>
             <th>Worth</th>
             <th>Demand</th>
             <th>Rarity</th>
-            <th>Notes</th>
           </tr>
         </thead>
         <tbody></tbody>
@@ -49,23 +48,17 @@
     </section>
   </main>
 
-  <!-- Editor modal -->
   <div id="editor" class="modal" aria-hidden="true">
     <div class="modal-inner">
       <button id="closeEditor" class="close">✕</button>
       <h2>Edit skins JSON</h2>
-      <textarea id="editorArea" spellcheck="false"></textarea>
+      <textarea id="editorArea"></textarea>
       <div class="modal-actions">
         <button id="saveEditor">Save to page</button>
         <button id="resetData">Reset sample data</button>
       </div>
-      <p class="hint">This edits client-side data only. To persist, replace <code>skins.json</code> on your server/repo.</p>
     </div>
   </div>
-
-  <footer>
-    <small>Tip: Click column headers to sort. Use "Download JSON" to export the dataset.</small>
-  </footer>
 
   <script src="script.js"></script>
 </body>

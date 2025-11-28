@@ -3,48 +3,98 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Gun Skin Values • Market Tracker</title>
+  <title>Ohio Skin Vault • Black Market Values</title>
   <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <header class="header">
-    <div class="header-content">
-      <h1>Ohio Trading & Exchange Co.</h1>
-      <p class="subtitle">Real-time values & demand • Updated November 27, 2025</p>
-      <div class="controls">
-        <input type="text" id="search" placeholder="Search skins..." autocomplete="off">
-        <select id="sortBy">
-          <option value="name_asc">Name A-Z</option>
-          <option value="worth_asc">Lowest Value</option>
-          <option value="demand_desc">Highest Demand</option>
-          <option value="worth_desc">Highest Value</option>
-        </select>
-      </div>
+  <div class="scanlines"></div>
+  
+  <header class="wiki-header">
+    <h1>OHIO SKIN VAULT</h1>
+    <p class="subtitle">Underground Trading Wiki • Real-time Values • November 28, 2025</p>
+    <div class="search-bar">
+      <input type="text" id="search" placeholder="Search 758+ skins..." autocomplete="off">
     </div>
   </header>
 
-  <main class="container">
-    <div class="table-container">
-      <table id="skinsTable">
-        <thead>
-          <tr>
-            <th>Skin Name</th>
-            <th>Value</th>
-            <th>Demand</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-    </div>
-  </main>
+  <main class="wiki-container" id="content"></main>
 
-  <footer class="footer">
-    <p>Gun Skin Values • Community-Driven Market Data</p>
+  <footer class="wiki-footer">
+    <p>Ohio Trading & Exchange Co. • Community-driven black market data • Not affiliated with official servers</p>
   </footer>
 
   <script src="skins.js"></script>
-  <script src="script.js"></script>
+  <script>
+    let skins = embeddedSkins || [];
+
+    const categories = {
+      "Invisibles": skins.filter(s => s.name.startsWith("Invisible")),
+      "Obsidian": skins.filter(s => s.name.startsWith("Obsidian")),
+      "Dark Matter": skins.filter(s => s.name.includes("Dark Matter")),
+      "Anti Matter": skins.filter(s => s.name.includes("Anti Matter")),
+      "Crimson Bloods": skins.filter(s => s.name.includes("Crimson Bloods")),
+      "Underworld": skins.filter(s => s.name.startsWith("Underworld")),
+      "Christmas 2024": skins.filter(s => s.name.includes("Solid Gold") || s.name.includes("Gift Wrapped") || s.name.includes("Christmas Future") || s.name.includes("Golden Snow") || s.name.includes("Frozen Gold") || s.name.includes("Sub Zero")),
+      "4th of July 2025": skins.filter(s => s.name.includes("Rainbow Firework") || s.name.includes("Solid Gold V2")),
+      "Atomic Pumpkin": skins.filter(s => s.name.includes("Atomic Pumpkin")),
+      "Ethereal": skins.filter(s => s.name.startsWith("Ethereal")),
+      "Spectral": skins.filter(s => s.name.startsWith("Spectral")),
+      "Balloons": skins.filter(s => s.name.includes("Balloon")),
+      "Legendary & Event": skins.filter(s => !Object.values(categories).flat().includes(s))
+    };
+
+    const content = document.getElementById("content");
+    const searchInput = document.getElementById("search");
+
+    function formatWorth(n) {
+      if (n >= 1000000) return (n / 1000000).toFixed(1) + "M";
+      if (n >= 1000) return (n / 1000).toFixed(0) + "K";
+      return n;
+    }
+
+    function getDemandClass(d) {
+      if (d === "?" || d === "0") return "unknown";
+      const num = parseFloat(d);
+      if (num >= 9) return "insane";
+      if (num >= 8) return "high";
+      if (num >= 6) return "med";
+      return "low";
+    }
+
+    function render() {
+      const query = searchInput.value.toLowerCase();
+      content.innerHTML = "";
+
+      Object.entries(categories).forEach(([cat, list]) => {
+        const filtered = list.filter(s => s.name.toLowerCase().includes(query));
+        if (filtered.length === 0) return;
+
+        const section = document.createElement("section");
+        section.className = "category";
+        section.innerHTML = `
+          <h2 class="category-title">${cat} <span class="count">${filtered.length}</span></h2>
+          <div class="grid">
+            ${filtered.map(skin => `
+              <div class="skin-card" data-demand="${getDemandClass(skin.demand)}">
+                <div class="rarity-badge ${cat.toLowerCase().replace(/[^a-z]/g,'-')}">${cat.split(" ")[0]}</div>
+                <h3>${skin.name.replace(/^(Invisible|Obsidian|Dark Matter|Anti Matter|Underworld)\s/, '')}</h3>
+                <div class="value">$ ${skin.worth === 0 ? "Unrated" : formatWorth(skin.worth)}</div>
+                <div class="demand">
+                  Demand: <span class="demand-value ${getDemandClass(skin.demand)}">
+                    ${skin.demand === "?" ? "Unknown" : skin.demand + "/10"}
+                  </span>
+                </div>
+              </div>
+            `).join("")}
+          </div>
+        `;
+        content.appendChild(section);
+      });
+    }
+
+    searchInput.addEventListener("input", render);
+    render();
+  </script>
 </body>
 </html>
-

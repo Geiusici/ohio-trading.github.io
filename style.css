@@ -1,94 +1,69 @@
-/* ---------- Base & Reset ---------- */
-*{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%}
+*{margin:0;padding:0;box-sizing:border-box}
 body{
+  background:#000;
+  color:#eee;
   font-family:'Share Tech Mono',monospace;
-  background:linear-gradient(180deg,#040404,#0b0b0b 60%);
-  color:#eaeaea;
-  -webkit-font-smoothing:antialiased;
-  -moz-osx-font-smoothing:grayscale;
   overflow-x:hidden;
+  min-height:100vh;
+  position:relative;
 }
 
-/* subtle film grain */
-.grain{position:fixed;inset:0;pointer-events:none;background-image:radial-gradient(rgba(255,255,255,0.02) 1px, transparent 1px);background-size:3px 3px;opacity:0.06;z-index:9999}
+/* Floating ash particles */
+#particles{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1}
+.particle{position:absolute;width:2px;height:2px;background:#333;border-radius:50%;animation:fall linear infinite;}
+@keyframes fall{0%{transform:translateY(-100vh) rotate(0deg);opacity:0}10%{opacity:1}90%{opacity:0.1}100%{transform:translateY(100vh) rotate(360deg);opacity:0}}
 
-/* beacon sweep (subtle) */
-.beacon{position:fixed;left:50%;top:10px;transform:translateX(-50%);width:760px;height:220px;pointer-events:none;z-index:3;opacity:0.06}
-.beacon::before{content:"";position:absolute;inset:0;background:conic-gradient(from 90deg,#333 0deg,#000 60deg,#000 300deg,#333 360deg);filter:blur(28px);animation:spin 12s linear infinite}
-@keyframes spin{to{transform:translateX(-50%) rotate(360deg)}}
+/* Ash overlay */
+.ash{position:fixed;top:0;left:0;right:0;bottom:0;background:radial-gradient(circle at 50% 20%,transparent 0%,#111 100%);pointer-events:none;z-index:2;animation:ash 40s linear infinite;}
+@keyframes ash{0%{background-position:0 0}100%{background-position:100px 100px}}
 
-/* particles placeholder (script injects .particle) */
-#particles{position:fixed;inset:0;pointer-events:none;z-index:1}
-.particle{position:absolute;width:2px;height:2px;border-radius:50%;background:linear-gradient(#666,#111);opacity:0.8;animation:fall linear infinite}
-@keyframes fall{0%{transform:translateY(-120vh);opacity:0}10%{opacity:0.8}90%{opacity:0.05}100%{transform:translateY(120vh);opacity:0}}
+/* Rotating red beacon */
+.beacon{position:fixed;top:0;left:50%;width:800px;height:300px;margin-left:-400px;background:conic-gradient(from 0deg at 50% 0%,#300 0deg,#000 60deg,#000 300deg,#300 360deg);pointer-events:none;z-index:3;animation:beacon 12s linear infinite;}
+@keyframes beacon{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
 
-/* ---------- Header ---------- */
-.header{padding:34px 16px 10px;text-align:center;position:relative;z-index:10}
-.header-inner{display:inline-block;padding:18px 28px;border-radius:10px;background:rgba(255,255,255,0.02);backdrop-filter:blur(2px)}
-.logo{font-family:'Orbitron',sans-serif;font-size:2rem;letter-spacing:6px;color:#fff;text-transform:uppercase}
-.tagline{color:#9a9a9a;margin-top:6px;font-size:0.85rem;letter-spacing:3px}
+/* Header */
+.header{text-align:center;padding:5rem 0 3rem;position:relative;z-index:10}
+.logo{font-family:'Orbitron',sans-serif;font-size:5rem;font-weight:900;color:#fff;text-shadow:0 0 40px #f00;letter-spacing:10px}
+.tagline{color:#444;letter-spacing:6px;margin-top:1rem;font-size:0.9rem}
 
-/* ---------- Navigation ---------- */
-.nav{display:flex;justify-content:center;gap:14px;margin:18px 0;z-index:10}
-.nav-btn{background:transparent;border:1px solid rgba(255,255,255,0.04);color:#bdbdbd;padding:8px 18px;border-radius:8px;cursor:pointer;font-family:'Orbitron',sans-serif;transition:all .22s}
-.nav-btn:hover{transform:translateY(-3px);border-color:rgba(255,255,255,0.12);color:#fff}
-.nav-btn.active{background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);border-color:rgba(255,255,255,0.14);box-shadow:0 8px 30px rgba(0,0,0,0.6)}
+/* Nav */
+.nav{display:flex;justify-content:center;gap:3rem;margin:2rem 0;}
+.nav-btn{background:transparent;border:2px solid #444;color:#888;padding:1rem 3rem;font-family:'Orbitron';font-size:1.2rem;cursor:pointer;transition:0.4s}
+.nav-btn.active,.nav-btn:hover{border-color:#fff;color:#fff;background:#111;box-shadow:0 0 30px rgba(255,255,255,0.2)}
 
-/* ---------- Layout ---------- */
-.main{max-width:1280px;margin:0 auto;padding:12px 18px 60px}
-
-/* pages */
-.page{display:none}
+/* Pages */
+.page{display:none;max-width:1400px;margin:0 auto;padding:2rem}
 .page.active{display:block}
 
-/* ---------- Vault ---------- */
-.search-panel{display:flex;justify-content:center;padding:18px;margin-bottom:18px;border-radius:10px}
-.search-panel input#search{width:92%;max-width:760px;padding:14px 16px;background:#080808;border:1px solid rgba(255,255,255,0.04);color:#fff;border-radius:8px;font-size:1rem}
-.vault-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+/* Vault */
+.search-bar{text-align:center;margin:3rem 0}
+#search{background:#111;border:2px solid #444;color:#fff;padding:1.2rem 2rem;width:80%;max-width:700px;font-size:1.2rem}
+.category{margin:4rem 0}
+.cat-title{font-family:'Orbitron';font-size:2.2rem;color:#fff;border-bottom:3px double #444;padding-bottom:0.5rem}
+.cat-title span{color:#666;font-size:1rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1.5rem;margin-top:2rem}
+.card{background:#0a0a0a;border:1px solid #333;padding:1.8rem;transition:0.4s;animation:fadeIn 0.6s forwards;opacity:0;transform:translateY(20px)}
+.card:hover{border-color:#fff;transform:translateY(-10px);box-shadow:0 0 40px rgba(255,255,255,0.15)}
+@keyframes fadeIn{to{opacity:1;transform:translateY(0)}}
+.name{color:#fff;font-size:1.2rem;margin-bottom:1rem}
+.value{font-size:2rem;color:#fff;font-weight:bold}
+.demand{color:#999;margin-top:0.5rem}
 
-/* card */
-.card{display:flex;justify-content:space-between;align-items:center;padding:16px;border-radius:10px;background:linear-gradient(180deg,#0c0c0c,#070707);border:1px solid rgba(255,255,255,0.03);transition:transform .28s,box-shadow .28s}
-.card:hover{transform:translateY(-8px);box-shadow:0 18px 40px rgba(0,0,0,0.6)}
-.card-left{display:flex;flex-direction:column}
-.card-name{font-weight:700;color:#fff}
-.card-demand{font-size:0.86rem;color:#9a9a9a;margin-top:6px}
-.card-right{display:flex;align-items:center}
-.card-value{font-weight:900;font-size:1.2rem;color:#fff}
-
-/* empty */
-.empty{text-align:center;color:#8a8a8a;padding:26px;background:rgba(255,255,255,0.01);border-radius:8px}
-
-/* ---------- Calculator ---------- */
-.calc-panel{padding:18px;border-radius:12px;background:linear-gradient(180deg,#0b0b0b,#060606);border:1px solid rgba(255,255,255,0.03)}
-.calc-title{text-align:center;font-family:'Orbitron',sans-serif;font-size:1.8rem;color:#fff;margin-bottom:14px}
-
-/* grid */
-.calculator{display:grid;grid-template-columns:1fr 90px 1fr;gap:18px;align-items:start}
-.panel-sub{padding:14px;border-radius:10px;background:linear-gradient(180deg,#0e0e0e,#070707);border:1px solid rgba(255,255,255,0.02)}
-.trade-side h3{font-family:'Orbitron',sans-serif;text-align:center;margin:4px 0 10px;color:#fff}
-
-/* list */
-.items{min-height:200px}
-.trade-item{display:flex;justify-content:space-between;align-items:center;padding:10px;margin:8px 0;border-radius:8px;background:#0b0b0b;border-left:3px solid rgba(255,255,255,0.04)}
-.trade-item .remove{background:none;border:none;color:#ff6b6b;font-size:1.1rem;cursor:pointer}
-
-/* input + dropdown */
-.input-wrapper{position:relative;margin-top:12px}
-.input-wrapper input{width:100%;padding:12px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:#050505;color:#fff}
-.dropdown{position:absolute;left:0;right:0;top:calc(100% + 8px);background:#050505;border:1px solid rgba(255,255,255,0.03);max-height:260px;overflow:auto;display:none;z-index:50}
-.option{padding:10px;border-bottom:1px solid rgba(255,255,255,0.02);cursor:pointer}
-.option:hover{background:#0b2b1b;color:#bfffbf}
-
-/* totals & verdict */
-.total{text-align:center;margin-top:12px;color:#bdbdbd}
-.total span{color:#fff;font-weight:700}
-.vs{display:flex;align-items:center;justify-content:center;font-size:2.6rem;color:#9a9a9a}
-.verdict{text-align:center;margin-top:18px;font-family:'Orbitron',sans-serif;font-size:1.6rem;color:#9a9a9a}
-
-/* ---------- Responsive ---------- */
-@media (max-width:980px){
-  .calculator{grid-template-columns:1fr;gap:12px}
-  .vs{display:none}
-  .vault-grid{grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}
-}
+/* Calculator */
+.calc-title{text-align:center;font-family:'Orbitron';font-size:3rem;color:#fff;margin:3rem 0;text-shadow:0 0 30px #f00}
+.calculator{display:grid;grid-template-columns:1fr 120px 1fr;gap:3rem;max-width:1300px;margin:0 auto}
+.trade-side{background:#0a0a0a;border:2px solid #333;padding:2rem;min-height:600px;position:relative}
+.trade-side h2{text-align:center;font-family:'Orbitron';color:#fff;font-size:2rem;margin-bottom:1.5rem}
+.items{min-height:300px}
+.trade-item{background:#111;padding:1rem;margin:0.8rem 0;display:flex;justify-content:space-between;align-items:center;border-left:4px solid #666;animation:slideIn 0.4s}
+@keyframes slideIn{from{transform:translateX(-50px);opacity:0}}
+.trade-item button{background:none;border:none;color:#f66;font-size:1.6rem;cursor:pointer}
+.input-wrapper{position:relative;margin-top:2rem}
+.input-wrapper input{width:100%;background:#000;border:2px solid #444;color:#fff;padding:1.2rem;font-size:1.1rem}
+.dropdown{position:absolute;top:100%;left:0;right:0;background:#000;border:2px solid #444;max-height:300px;overflow-y:auto;display:none;z-index:100}
+.option{padding:1rem;cursor:pointer;border-bottom:1px solid #222;transition:0.3s}
+.option:hover{background:#333;color:#0f0}
+.total{text-align:center;margin-top:2rem;font-size:1.8rem;color:#999}
+.total span{color:#fff;font-weight:bold}
+.vs{font-size:5rem;color:#444;display:flex;align-items:center;justify-content:center}
+#verdict{text-align:center;font-family:'Orbitron';font-size:4.5rem;margin:4rem 0;text-transform:uppercase;color:#666}

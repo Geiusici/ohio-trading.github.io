@@ -1,191 +1,282 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Ohio Trading & Exchange Co.</title>
-  <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
-</head>
 
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="style.css" />
+</head>
 <body>
 
-  <header class="hdr">
-    <h1>OHIO TRADING & EXCHANGE CO.</h1>
-    <p>BLACKSITE NODE • 28 NOV 2025</p>
+  <!-- ambient layers -->
+  <div class="grain" aria-hidden="true"></div>
+  <div id="particles" aria-hidden="true"></div>
+  <div class="beacon" aria-hidden="true"></div>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-inner">
+      <h1 class="logo">OHIO TRADING &amp; EXCHANGE CO.</h1>
+      <p class="tagline">CLASSIFIED VAULT • 28 NOV 2025</p>
+    </div>
   </header>
 
-  <nav class="nav">
+  <!-- NAV -->
+  <nav class="nav" role="navigation" aria-label="Main">
     <button class="nav-btn active" data-page="vault">VAULT</button>
     <button class="nav-btn" data-page="calc">TRADE CALCULATOR</button>
   </nav>
 
-  <!-- VAULT PAGE -->
-  <section id="vault" class="page active">
-    <div class="search">
-      <input id="search" placeholder="SEARCH SKINS...">
-    </div>
-    <div id="vault-content"></div>
-  </section>
-
-  <!-- TRADE CALCULATOR -->
-  <section id="calc" class="page">
-    <div class="calc-title">TRADE ANALYZER</div>
-
-    <div class="calculator">
-
-      <!-- GIVING -->
-      <div class="trade-side giving">
-        <h2>GIVING</h2>
-        <div id="giving-items" class="items"></div>
-
-        <div class="input-wrap">
-          <input id="give-input" placeholder="Type skin name...">
-          <div id="give-dropdown" class="dropdown"></div>
-        </div>
-
-        <div class="total">TOTAL: <span id="give-total">$0</span></div>
+  <!-- MAIN CONTENT -->
+  <main class="main">
+    <!-- VAULT -->
+    <section id="vault" class="page active">
+      <div class="panel search-panel">
+        <input id="search" type="text" placeholder="SEARCH 758+ SKINS..." autocomplete="off" />
       </div>
 
-      <div class="vs">⟷</div>
+      <div id="vault-content" class="vault-grid"></div>
+    </section>
 
-      <!-- RECEIVING -->
-      <div class="trade-side receiving">
-        <h2>RECEIVING</h2>
-        <div id="receiving-items" class="items"></div>
+    <!-- CALCULATOR -->
+    <section id="calc" class="page">
+      <div class="panel calc-panel">
+        <h2 class="calc-title">TRADE ANALYZER</h2>
 
-        <div class="input-wrap">
-          <input id="receive-input" placeholder="Type skin name...">
-          <div id="receive-dropdown" class="dropdown"></div>
+        <div class="calculator">
+          <div class="trade-side giving panel-sub">
+            <h3>GIVING</h3>
+            <div id="giving-items" class="items"></div>
+
+            <div class="input-wrapper">
+              <input id="give-input" type="text" placeholder="Type skin name..." autocomplete="off">
+              <div id="give-dropdown" class="dropdown"></div>
+            </div>
+
+            <div class="total">TOTAL: <span id="give-total">$0</span></div>
+          </div>
+
+          <div class="vs">⟷</div>
+
+          <div class="trade-side receiving panel-sub">
+            <h3>RECEIVING</h3>
+            <div id="receiving-items" class="items"></div>
+
+            <div class="input-wrapper">
+              <input id="receive-input" type="text" placeholder="Type skin name..." autocomplete="off">
+              <div id="receive-dropdown" class="dropdown"></div>
+            </div>
+
+            <div class="total">TOTAL: <span id="receive-total">$0</span></div>
+          </div>
         </div>
 
-        <div class="total">TOTAL: <span id="receive-total">$0</span></div>
-
+        <div id="verdict" class="verdict">—</div>
       </div>
-    </div>
+    </section>
+  </main>
 
-    <div id="verdict" class="verdict"></div>
-  </section>
-
-  <!-- LOAD SKINS -->
+  <!-- your skins array file (must set `embeddedSkins`) -->
   <script src="skins.js"></script>
 
+  <!-- logic: converts embeddedSkins -> usable maps & preserves original behavior -->
   <script>
-    /* Convert your embeddedSkins[] into an object */
+    // Convert array to lookup map and keep names array for UI
     const skins = {};
-    embeddedSkins.forEach(s => {
-      skins[s.name.toLowerCase()] = s.worth;
+    const SKIN_LIST = Array.isArray(window.embeddedSkins) ? window.embeddedSkins.slice() : [];
+    SKIN_LIST.forEach(s => {
+      if (!s || !s.name) return;
+      skins[s.name.toLowerCase()] = s.worth || 0;
     });
 
-    const skinNames = embeddedSkins.map(s => s.name);
+    // Convenience: list of original objects for vault rendering / demand
+    const embedded = SKIN_LIST;
 
-    /* PAGE SWITCHING */
-    document.querySelectorAll('.nav-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    // Page elements
+    const vaultContent = document.getElementById("vault-content");
+    const searchInput = document.getElementById("search");
 
-        btn.classList.add('active');
-        document.getElementById(btn.dataset.page).classList.add('active');
+    // Nav switching (keeps original logic)
+    document.querySelectorAll(".nav-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
+        document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+        btn.classList.add("active");
+        document.getElementById(btn.dataset.page).classList.add("active");
       });
     });
 
-    /* VAULT SEARCH + DISPLAY */
-    const vaultContent = document.getElementById("vault-content");
+    // Render vault items (grouping preserved if desired)
+    function format(v){
+      if(v === 0) return "Unrated";
+      if(v >= 1000000) return "$" + (v/1000000).toFixed(1) + "M";
+      if(v >= 1000) return "$" + Math.floor(v/1000) + "K";
+      return "$" + v;
+    }
 
-    function renderVault(list) {
+    function renderVault(list){
       vaultContent.innerHTML = "";
-      list.forEach(s => {
-        const item = document.createElement("div");
-        item.classList.add("vault-item");
-        item.innerHTML = `
-          <span class="skin-name">${s.name}</span>
-          <span class="skin-value">$${s.worth.toLocaleString()}</span>
+      if (!Array.isArray(list) || list.length === 0) {
+        vaultContent.innerHTML = '<div class="empty">No skins found.</div>';
+        return;
+      }
+
+      // make neat cards (sorted by name)
+      list.sort((a,b)=> a.name.localeCompare(b.name)).forEach(s=>{
+        const card = document.createElement("article");
+        card.className = "card";
+        card.innerHTML = `
+          <div class="card-left">
+            <div class="card-name">${escapeHtml(s.name)}</div>
+            <div class="card-demand">DEMAND: ${s.demand === "?" ? "???" : (s.demand + "/10")}</div>
+          </div>
+          <div class="card-right">
+            <div class="card-value">${format(s.worth)}</div>
+          </div>
         `;
-        vaultContent.appendChild(item);
+        vaultContent.appendChild(card);
       });
     }
 
-    renderVault(embeddedSkins);
+    // initial render (all)
+    renderVault(embedded);
 
-    document.getElementById("search").addEventListener("input", () => {
-      const q = document.getElementById("search").value.toLowerCase();
-      const filtered = embeddedSkins.filter(s => s.name.toLowerCase().includes(q));
+    // search handler
+    searchInput.addEventListener("input", () => {
+      const q = (searchInput.value || "").toLowerCase().trim();
+      const filtered = q ? embedded.filter(s => s.name.toLowerCase().includes(q)) : embedded.slice();
       renderVault(filtered);
     });
 
-    /* AUTOCOMPLETE DROPDOWNS */
-    function setupDropdown(inputId, dropdownId, callback) {
-      const input = document.getElementById(inputId);
-      const dropdown = document.getElementById(dropdownId);
+    // AUTOCOMPLETE + TRADE CALC (kept same semantics)
+    const giveInput = document.getElementById("give-input");
+    const receiveInput = document.getElementById("receive-input");
+    const giveDropdown = document.getElementById("give-dropdown");
+    const receiveDropdown = document.getElementById("receive-dropdown");
+    const giveItems = document.getElementById("giving-items");
+    const receiveItems = document.getElementById("receiving-items");
+    const giveTotal = document.getElementById("give-total");
+    const receiveTotal = document.getElementById("receive-total");
+    const verdict = document.getElementById("verdict");
 
-      input.addEventListener("input", () => {
-        const q = input.value.toLowerCase();
-        dropdown.innerHTML = "";
+    // list of names for quick search
+    const NAMES = embedded.map(x => x.name);
 
-        if (!q) return;
-
-        skinNames.filter(n => n.toLowerCase().includes(q)).slice(0, 6).forEach(name => {
-          const d = document.createElement("div");
-          d.classList.add("dropdown-item");
-          d.innerText = name;
-          d.onclick = () => callback(name);
-          dropdown.appendChild(d);
-        });
-      });
+    function showDropdown(input, dropdown) {
+      const val = (input.value || "").toLowerCase().trim();
+      if (!val) { dropdown.innerHTML = ""; dropdown.style.display = "none"; return; }
+      const matches = NAMES.filter(n => n.toLowerCase().includes(val)).slice(0, 8);
+      dropdown.innerHTML = matches.map(m => `<div class="option" data-name="${escapeHtml(m)}">${escapeHtml(m)}</div>`).join("");
+      dropdown.style.display = matches.length ? "block" : "none";
     }
 
-    /* TRADE SIDES ARRAYS */
-    const givingItems = [];
-    const receivingItems = [];
-
-    function updateTotals() {
-      const giveTotal = givingItems.reduce((a, b) => a + skins[b.toLowerCase()], 0);
-      const recvTotal = receivingItems.reduce((a, b) => a + skins[b.toLowerCase()], 0);
-
-      document.getElementById("give-total").innerText = "$" + giveTotal.toLocaleString();
-      document.getElementById("receive-total").innerText = "$" + recvTotal.toLocaleString();
-
-      const verdictBox = document.getElementById("verdict");
-      const diff = recvTotal - giveTotal;
-
-      verdictBox.innerText =
-        diff > 0 ? `WIN: +$${diff.toLocaleString()}` :
-        diff < 0 ? `LOSS: -$${Math.abs(diff).toLocaleString()}` :
-        "FAIR TRADE";
-    }
-
-    function addItem(side, name) {
-      const list = side === "give" ? givingItems : receivingItems;
-      const element = side === "give" ? document.getElementById("giving-items") : document.getElementById("receiving-items");
-
-      list.push(name);
-
-      const item = document.createElement("div");
-      item.classList.add("trade-item");
-      item.innerHTML = `${name} <span class="x">✕</span>`;
-      item.querySelector(".x").onclick = () => {
-        list.splice(list.indexOf(name), 1);
-        item.remove();
-        updateTotals();
-      };
-
-      element.appendChild(item);
+    function addSkin(name, worth, container) {
+      const div = document.createElement("div");
+      div.className = "trade-item";
+      div.innerHTML = `<span class="tname">${escapeHtml(name)}</span><span class="tval">${format(worth)}</span><button class="remove" aria-label="remove">×</button>`;
+      div.querySelector(".remove").onclick = () => { div.remove(); updateTotals(); };
+      container.appendChild(div);
       updateTotals();
     }
 
-    setupDropdown("give-input", "give-dropdown", (name) => {
-      addItem("give", name);
-      document.getElementById("give-input").value = "";
+    [giveInput, receiveInput].forEach(input => {
+      if (!input) return;
+      const dropdown = input.id.includes("give") ? giveDropdown : receiveDropdown;
+      input.addEventListener("input", () => showDropdown(input, dropdown));
+      input.addEventListener("keydown", e => {
+        if (e.key === "Enter" && input.value) {
+          const match = embedded.find(s => s.name.toLowerCase() === input.value.toLowerCase());
+          if (match) {
+            addSkin(match.name, match.worth, input.id.includes("give") ? giveItems : receiveItems);
+            input.value = "";
+            dropdown.innerHTML = ""; dropdown.style.display = "none";
+          }
+        }
+      });
     });
 
-    setupDropdown("receive-input", "receive-dropdown", (name) => {
-      addItem("receive", name);
-      document.getElementById("receive-input").value = "";
+    // click handler for selecting dropdown items
+    document.addEventListener("click", e => {
+      const opt = e.target.closest(".option");
+      if (opt) {
+        const name = opt.dataset.name;
+        const match = embedded.find(s => s.name === name);
+        if (match) {
+          const container = opt.closest("#give-dropdown") ? giveItems : receiveItems;
+          addSkin(match.name, match.worth, container);
+        }
+        giveInput.value = receiveInput.value = "";
+        giveDropdown.innerHTML = receiveDropdown.innerHTML = "";
+        giveDropdown.style.display = receiveDropdown.style.display = "none";
+      } else if (!e.target.closest(".input-wrapper")) {
+        // hide dropdowns when clicking outside
+        if (giveDropdown) giveDropdown.style.display = "none";
+        if (receiveDropdown) receiveDropdown.style.display = "none";
+      }
     });
 
+    function getTotal(container) {
+      return Array.from(container.children).reduce((sum, el) => {
+        const val = el.querySelector(".tval") ? el.querySelector(".tval").textContent : el.children[1].textContent;
+        if (val === "Unrated") return sum;
+        const n = parseFloat(val.replace(/[$,MK]/g, ""));
+        return sum + (val.includes("M") ? n * 1000000 : val.includes("K") ? n * 1000 : n);
+      }, 0);
+    }
+
+    function updateTotals() {
+      const give = getTotal(giveItems);
+      const receive = getTotal(receiveItems);
+      giveTotal.textContent = format(give);
+      receiveTotal.textContent = format(receive);
+
+      if (give + receive === 0) {
+        verdict.textContent = "—";
+        verdict.style.color = "#8a8a8a";
+        verdict.style.textShadow = "none";
+        return;
+      }
+
+      const pct = give === 0 ? 999 : ((receive - give) / give) * 100;
+      let msg, color;
+      if (Math.abs(pct) <= 12) { msg = "FAIR TRADE"; color = "#fff"; }
+      else if (pct > 12) { msg = `WIN +${pct.toFixed(0)}%`; color = "#7CFC7C"; }
+      else if (pct > -35) { msg = "SLIGHT L"; color = "#FFD24D"; }
+      else { msg = "SCAM / BAD"; color = "#FF6B6B"; }
+
+      verdict.textContent = msg;
+      verdict.style.color = color;
+      verdict.style.textShadow = `0 0 18px ${color}`;
+    }
+
+    // safe escape helper
+    function escapeHtml(str) {
+      if (!str) return "";
+      return String(str).replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"})[ch]);
+    }
+
+    // Particle DOM-based system (keeps compatibility with CSS animations)
+    (function initParticles(){
+      const particlesRoot = document.getElementById("particles");
+      if (!particlesRoot) return;
+      for (let i = 0; i < 80; i++) {
+        const p = document.createElement("div");
+        p.className = "particle";
+        p.style.left = (Math.random() * 100) + "vw";
+        p.style.top = (Math.random() * 100) + "vh";
+        p.style.animationDelay = (Math.random() * 20) + "s";
+        p.style.animationDuration = ((Math.random() * 20) + 20) + "s";
+        particlesRoot.appendChild(p);
+      }
+    })();
+
+    // expose for debugging if needed
+    window.__ohio = { renderVault, updateTotals };
   </script>
-
 </body>
 </html>

@@ -1,170 +1,94 @@
-body {
-  margin: 0;
-  font-family: "Share Tech Mono", monospace;
-  background: #050505;
-  color: #00ffea;
-  overflow-x: hidden;
+/* ---------- Base & Reset ---------- */
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family:'Share Tech Mono',monospace;
+  background:linear-gradient(180deg,#040404,#0b0b0b 60%);
+  color:#eaeaea;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  overflow-x:hidden;
 }
 
-.hdr {
-  text-align: center;
-  padding: 25px 0;
-  background: #0a0a0a;
-  border-bottom: 2px solid #00ffee55;
-}
+/* subtle film grain */
+.grain{position:fixed;inset:0;pointer-events:none;background-image:radial-gradient(rgba(255,255,255,0.02) 1px, transparent 1px);background-size:3px 3px;opacity:0.06;z-index:9999}
 
-.hdr h1 {
-  margin: 0;
-  font-family: "Orbitron", sans-serif;
-  font-size: 28px;
-  letter-spacing: 3px;
-  color: #00ffff;
-}
+/* beacon sweep (subtle) */
+.beacon{position:fixed;left:50%;top:10px;transform:translateX(-50%);width:760px;height:220px;pointer-events:none;z-index:3;opacity:0.06}
+.beacon::before{content:"";position:absolute;inset:0;background:conic-gradient(from 90deg,#333 0deg,#000 60deg,#000 300deg,#333 360deg);filter:blur(28px);animation:spin 12s linear infinite}
+@keyframes spin{to{transform:translateX(-50%) rotate(360deg)}}
 
-.nav {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-  padding: 15px;
-}
+/* particles placeholder (script injects .particle) */
+#particles{position:fixed;inset:0;pointer-events:none;z-index:1}
+.particle{position:absolute;width:2px;height:2px;border-radius:50%;background:linear-gradient(#666,#111);opacity:0.8;animation:fall linear infinite}
+@keyframes fall{0%{transform:translateY(-120vh);opacity:0}10%{opacity:0.8}90%{opacity:0.05}100%{transform:translateY(120vh);opacity:0}}
 
-.nav-btn {
-  padding: 10px 25px;
-  background: #0c0c0c;
-  border: 1px solid #00ffee55;
-  color: #00ffee;
-  cursor: pointer;
-  font-size: 16px;
-  transition: 0.2s;
-}
+/* ---------- Header ---------- */
+.header{padding:34px 16px 10px;text-align:center;position:relative;z-index:10}
+.header-inner{display:inline-block;padding:18px 28px;border-radius:10px;background:rgba(255,255,255,0.02);backdrop-filter:blur(2px)}
+.logo{font-family:'Orbitron',sans-serif;font-size:2rem;letter-spacing:6px;color:#fff;text-transform:uppercase}
+.tagline{color:#9a9a9a;margin-top:6px;font-size:0.85rem;letter-spacing:3px}
 
-.nav-btn:hover, .nav-btn.active {
-  background: #00ffee22;
-  border-color: #00ffeeaa;
-}
+/* ---------- Navigation ---------- */
+.nav{display:flex;justify-content:center;gap:14px;margin:18px 0;z-index:10}
+.nav-btn{background:transparent;border:1px solid rgba(255,255,255,0.04);color:#bdbdbd;padding:8px 18px;border-radius:8px;cursor:pointer;font-family:'Orbitron',sans-serif;transition:all .22s}
+.nav-btn:hover{transform:translateY(-3px);border-color:rgba(255,255,255,0.12);color:#fff}
+.nav-btn.active{background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);border-color:rgba(255,255,255,0.14);box-shadow:0 8px 30px rgba(0,0,0,0.6)}
 
-/* PAGE */
-.page {
-  display: none;
-  padding: 25px;
-}
-.page.active {
-  display: block;
-}
+/* ---------- Layout ---------- */
+.main{max-width:1280px;margin:0 auto;padding:12px 18px 60px}
 
-/* VAULT */
-.search input {
-  width: 100%;
-  padding: 12px;
-  font-size: 18px;
-  background: #0b0b0b;
-  border: 1px solid #00ffee55;
-  color: #00ffee;
-}
+/* pages */
+.page{display:none}
+.page.active{display:block}
 
-#vault-content {
-  margin-top: 20px;
-}
+/* ---------- Vault ---------- */
+.search-panel{display:flex;justify-content:center;padding:18px;margin-bottom:18px;border-radius:10px}
+.search-panel input#search{width:92%;max-width:760px;padding:14px 16px;background:#080808;border:1px solid rgba(255,255,255,0.04);color:#fff;border-radius:8px;font-size:1rem}
+.vault-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
 
-.vault-item {
-  display: flex;
-  justify-content: space-between;
-  padding: 12px;
-  margin-bottom: 8px;
-  border-bottom: 1px solid #00ffee33;
-}
+/* card */
+.card{display:flex;justify-content:space-between;align-items:center;padding:16px;border-radius:10px;background:linear-gradient(180deg,#0c0c0c,#070707);border:1px solid rgba(255,255,255,0.03);transition:transform .28s,box-shadow .28s}
+.card:hover{transform:translateY(-8px);box-shadow:0 18px 40px rgba(0,0,0,0.6)}
+.card-left{display:flex;flex-direction:column}
+.card-name{font-weight:700;color:#fff}
+.card-demand{font-size:0.86rem;color:#9a9a9a;margin-top:6px}
+.card-right{display:flex;align-items:center}
+.card-value{font-weight:900;font-size:1.2rem;color:#fff}
 
-.skin-value {
-  color: #fff;
-}
+/* empty */
+.empty{text-align:center;color:#8a8a8a;padding:26px;background:rgba(255,255,255,0.01);border-radius:8px}
 
-/* CALCULATOR */
-.calculator {
-  display: flex;
-  justify-content: center;
-  gap: 40px;
-  margin-top: 20px;
-}
+/* ---------- Calculator ---------- */
+.calc-panel{padding:18px;border-radius:12px;background:linear-gradient(180deg,#0b0b0b,#060606);border:1px solid rgba(255,255,255,0.03)}
+.calc-title{text-align:center;font-family:'Orbitron',sans-serif;font-size:1.8rem;color:#fff;margin-bottom:14px}
 
-.trade-side {
-  width: 40%;
-  background: #0a0f12;
-  padding: 15px;
-  border: 1px solid #00ffee55;
-}
+/* grid */
+.calculator{display:grid;grid-template-columns:1fr 90px 1fr;gap:18px;align-items:start}
+.panel-sub{padding:14px;border-radius:10px;background:linear-gradient(180deg,#0e0e0e,#070707);border:1px solid rgba(255,255,255,0.02)}
+.trade-side h3{font-family:'Orbitron',sans-serif;text-align:center;margin:4px 0 10px;color:#fff}
 
-.trade-side h2 {
-  margin: 0 0 10px;
-  font-size: 20px;
-  color: #00ffff;
-}
+/* list */
+.items{min-height:200px}
+.trade-item{display:flex;justify-content:space-between;align-items:center;padding:10px;margin:8px 0;border-radius:8px;background:#0b0b0b;border-left:3px solid rgba(255,255,255,0.04)}
+.trade-item .remove{background:none;border:none;color:#ff6b6b;font-size:1.1rem;cursor:pointer}
 
-.items {
-  min-height: 40px;
-  margin-bottom: 12px;
-}
+/* input + dropdown */
+.input-wrapper{position:relative;margin-top:12px}
+.input-wrapper input{width:100%;padding:12px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:#050505;color:#fff}
+.dropdown{position:absolute;left:0;right:0;top:calc(100% + 8px);background:#050505;border:1px solid rgba(255,255,255,0.03);max-height:260px;overflow:auto;display:none;z-index:50}
+.option{padding:10px;border-bottom:1px solid rgba(255,255,255,0.02);cursor:pointer}
+.option:hover{background:#0b2b1b;color:#bfffbf}
 
-.trade-item {
-  background: #011f24;
-  padding: 8px;
-  margin-bottom: 5px;
-  border: 1px solid #00ffee44;
-  display: flex;
-  justify-content: space-between;
-}
+/* totals & verdict */
+.total{text-align:center;margin-top:12px;color:#bdbdbd}
+.total span{color:#fff;font-weight:700}
+.vs{display:flex;align-items:center;justify-content:center;font-size:2.6rem;color:#9a9a9a}
+.verdict{text-align:center;margin-top:18px;font-family:'Orbitron',sans-serif;font-size:1.6rem;color:#9a9a9a}
 
-.trade-item .x {
-  cursor: pointer;
-}
-
-.input-wrap {
-  position: relative;
-}
-
-input {
-  width: 100%;
-  padding: 10px;
-  font-size: 16px;
-  background: #0b0b0b;
-  border: 1px solid #00ffee55;
-  color: #00ffee;
-}
-
-.dropdown {
-  position: absolute;
-  top: 42px;
-  left: 0;
-  right: 0;
-  background: #031113;
-  border: 1px solid #00ffee55;
-  max-height: 160px;
-  overflow-y: auto;
-  z-index: 50;
-}
-
-.dropdown-item {
-  padding: 8px;
-  cursor: pointer;
-  border-bottom: 1px solid #00ffee22;
-}
-
-.dropdown-item:hover {
-  background: #00ffee22;
-}
-
-.total {
-  margin-top: 10px;
-  font-size: 18px;
-}
-
-.vs {
-  font-size: 30px;
-  margin-top: 45px;
-  color: #00ffee;
-}
-
-.verdict {
-  text-align: center;
-  margin-top: 20px;
-  font-size: 26px;
+/* ---------- Responsive ---------- */
+@media (max-width:980px){
+  .calculator{grid-template-columns:1fr;gap:12px}
+  .vs{display:none}
+  .vault-grid{grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}
 }

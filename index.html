@@ -9,16 +9,16 @@
 </head>
 <body>
 
-  <!-- Bunker Ceiling Light (flickering) -->
-  <div class="ceiling-light"></div>
-  <div class="light-flicker"></div>
+  <!-- Dust overlay -->
+  <div class="dust"></div>
 
-  <!-- Main Title with hanging light effect -->
-  <header class="bunker-header">
-    <div class="sign">
-      <h1 class="title flicker-text">OHIO TRADING & EXCHANGE CO.</h1>
-      <p class="subtitle">UNDERGROUND VAULT VALUES • NOV 28 2025</p>
-    </div>
+  <!-- Red emergency light -->
+  <div class="emergency-light"></div>
+
+  <!-- Title sign -->
+  <header class="header">
+    <h1 class="title">OHIO TRADING & EXCHANGE CO.</h1>
+    <p class="subtitle">BUNKER VAULT VALUES • 28 NOV 2025</p>
   </header>
 
   <!-- Tabs -->
@@ -27,189 +27,153 @@
     <button class="tab" data-tab="calc">TRADE CALCULATOR</button>
   </div>
 
-  <!-- Search Bar -->
-  <div class="search-box">
-    <input type="text" id="search" placeholder="SEARCH INVENTORY..." autocomplete="off">
+  <!-- Search -->
+  <div class="search">
+    <input type="text" id="search" placeholder="SEARCH VAULT..." autocomplete="off">
   </div>
 
-  <!-- Vault Content -->
+  <!-- Vault Tab -->
   <main id="vault" class="tab-content active">
-    <div id="content" class="bunker-content"></div>
+    <div id="content"></div>
   </main>
 
-  <!-- Trade Calculator -->
+  <!-- Trade Calculator Tab -->
   <div id="calc" class="tab-content">
-    <div class="calculator-grid">
+    <div class="calc-container">
       <div class="side giving">
         <h2>GIVING</h2>
-        <div id="giving-list"></div>
-        <input type="text" class="add-skin" placeholder="+ ADD SKIN" data-side="giving">
-        <div class="total" id="giving-total">$0</div>
+        <div id="giving-items"></div>
+        <input type="text" id="give-input" placeholder="+ ADD SKIN (type name)" autocomplete="off">
+        <div class="total">TOTAL: <span id="give-total">$0</span></div>
       </div>
 
-      <div class="arrow">⟷</div>
+      <div class="vs">⟷</div>
 
       <div class="side receiving">
         <h2>RECEIVING</h2>
-        <div id="receiving-list"></div>
-        <input type="text" class="add-skin" placeholder="+ ADD SKIN" data-side="receiving">
-        <div class="total" id="receiving-total">$0</div>
+        <div id="receive-items"></div>
+        <input type="text" id="receive-input" placeholder="+ ADD SKIN (type name)" autocomplete="off">
+        <div class="total">TOTAL: <span id="receive-total">$0</span></div>
       </div>
     </div>
-
-    <div class="verdict" id="verdict">—</div>
+    <div id="verdict">—</div>
   </div>
-
-  <footer class="bunker-footer">
-    COMMUNITY DRIVEN • NO WARRANTY • 2025
-  </footer>
 
   <script src="skins.js"></script>
   <script>
     const skins = embeddedSkins || [];
     const content = document.getElementById("content");
-    const search = document.getElementById("search");
+    const searchInput = document.getElementById("search");
 
-    // Tab switching
-    document.querySelectorAll(".tab").forEach(t => {
-      t.addEventListener("click", () => {
+    // === TABS ===
+    document.querySelectorAll(".tab").forEach(btn => {
+      btn.addEventListener("click", () => {
         document.querySelectorAll(".tab").forEach(b => b.classList.remove("active"));
         document.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
-        t.classList.add("active");
-        document.getElementById(t.dataset.tab).classList.add("active");
+        btn.classList.add("active");
+        document.getElementById(btn.dataset.tab).classList.add("active");
       });
     });
 
-    // Group skins exactly like your original file
+    // === GROUPING (exact original order) ===
     const order = ["Invisible","Obsidian","Dark Matter","Anti Matter","Crimson Bloods","Void Reapers","Underworld","White Ghost","Solid Gold","Gift Wrapped","Christmas Future","Golden Snow","Frozen Gold","Sub Zero","Rainbow Firework","Solid Gold V2","St Patrick","Holy Fire","Bloody Heart","Fallout","Atomic Pumpkin","Ethereal","Spectral","Balloon"];
     const groups = [];
     const used = new Set();
-
-    order.forEach(prefix => {
-      const list = skins.filter(s => {
-        if (used.has(s.name)) return false;
-        if (s.name.includes(prefix)) { used.add(s.name); return true; }
-        return false;
-      });
-      if (list.length) groups.push({ name: prefix, items: list });
+    order.forEach(p => {
+      const list = skins.filter(s => !used.has(s.name) && s.name.includes(p));
+      list.forEach(s => used.add(s.name));
+      if (list.length) groups.push({name: p, items: list});
     });
     const leftovers = skins.filter(s => !used.has(s.name));
-    if (leftovers.length) groups.push({ name: "Limited / Event", items: leftovers });
+    if (leftovers.length) groups.push({name: "Limited / Event", items: leftovers});
 
-    function format(num) {
-      if (num === 0) return "Unrated";
-      if (num >= 1000000) return "$" + (num/1000000).toFixed(1) + "M";
-      if (num >= 1000) return "$" + Math.floor(num/1000) + "K";
-      return "$" + num;
+    function format(v) {
+      if (v === 0) return "Unrated";
+      if (v >= 1000000) return "$" + (v/1000000).toFixed(1) + "M";
+      if (v >= 1000) return "$" + Math.floor(v/1000) + "K";
+      return "$" + v;
     }
 
-    function renderVault() {
-      const q = search.value.toLowerCase();
+    function render() {
+      const q = searchInput.value.toLowerCase();
       content.innerHTML = "";
       groups.forEach(g => {
         const filtered = g.items.filter(s => s.name.toLowerCase().includes(q));
         if (!filtered.length) return;
-
-        const section = document.createElement("div");
-        section.className = "category";
-        section.innerHTML = `
-          <h2 class="cat-header">${g.name} <span class="count">[${filtered.length}]</span></h2>
-          <div class="grid">
-            ${filtered.map(s => `
-              <div class="card">
-                <div class="name">${s.name}</div>
-                <div class="value">${format(s.worth)}</div>
-                <div class="demand">DEMAND: <span class="d${s.demand === '?' ? ' unknown' : parseFloat(s.demand) >= 8 ? ' high' : parseFloat(s.demand) >= 6 ? ' med' : ' low'}">
-                  ${s.demand === "?" ? "???" : s.demand + "/10"}
-                </span></div>
-              </div>
-            `).join("")}
+        content.innerHTML += `
+          <div class="category">
+            <h2>${g.name} <span>[${filtered.length}]</span></h2>
+            <div class="grid">
+              ${filtered.map(s => `
+                <div class="card">
+                  <div class="name">${s.name}</div>
+                  <div class="value">${format(s.worth)}</div>
+                  <div class="demand">Demand: ${s.demand === "?" ? "???" : s.demand+"/10"}</div>
+                </div>
+              `).join("")}
+            </div>
           </div>
         `;
-        content.appendChild(section);
       });
     }
+    searchInput.addEventListener("input", render);
+    render();
 
-    search.addEventListener("input", renderVault);
-    renderVault();
-
-    // ——— TRADE CALCULATOR (NOW 100% WORKING) ———
-    const givingList = document.getElementById("giving-list");
-    const receivingList = document.getElementById("receiving-list");
-    const givingTotal = document.getElementById("giving-total");
-    const receivingTotal = document.getElementById("receiving-total");
+    // === TRADE CALCULATOR (NOW 100% WORKING) ===
+    const giveItems = document.getElementById("giving-items");
+    const receiveItems = document.getElementById("receive-items");
+    const giveTotal = document.getElementById("give-total");
+    const receiveTotal = document.getElementById("receive-total");
     const verdict = document.getElementById("verdict");
 
-    function addSkin(text, side) {
-      const match = skins.find(s => s.name.toLowerCase() === text.toLowerCase());
-      if (!match) return false;
+    function addItem(input, container) {
+      const val = input.value.trim();
+      if (!val) return;
+      const match = skins.find(s => s.name.toLowerCase().includes(val.toLowerCase()));
+      if (!match) return;
 
-      const container = side === "giving" ? givingList : receivingList;
       const div = document.createElement("div");
-      div.className = "trade-item";
-      div.innerHTML = `
-        <span>${match.name}</span>
-        <span class="val">${format(match.worth)}</span>
-        <button class="remove">×</button>
-      `;
-      div.querySelector(".remove").onclick = () => { div.remove(); updateCalc(); };
+      div.className = "item";
+      div.innerHTML = `<span>${match.name}</span><span>${format(match.worth)}</span><button>×</button>`;
+      div.querySelector("button").onclick = () => { div.remove(); update(); };
       container.appendChild(div);
-      updateCalc();
-      return true;
+      input.value = "";
+      update();
     }
 
-    document.querySelectorAll(".add-skin").forEach(input => {
-      input.addEventListener("keydown", e => {
-        if (e.key === "Enter" && input.value.trim()) {
-          if (addSkin(input.value.trim(), input.dataset.side)) {
-            input.value = "";
-          }
-        }
-      });
-    });
+    document.getElementById("give-input").addEventListener("keydown", e => e.key === "Enter" && addItem(e.target, giveItems));
+    document.getElementById("receive-input").addEventListener("keydown", e => e.key === "Enter" && addItem(e.target, receiveItems));
 
-    function getTotal(container) {
+    function getWorth(container) {
       return Array.from(container.children).reduce((sum, el) => {
-        const val = el.querySelector(".val").textContent;
-        if (val.includes("Unrated")) return sum;
-        const num = parseFloat(val.replace(/[$,MK]/g, ""));
-        if (val.includes("M")) return sum + num * 1000000;
-        if (val.includes("K")) return sum + num * 1000;
-        return sum + num;
+        const text = el.children[1].textContent;
+        if (text === "Unrated") return sum;
+        const n = parseFloat(text.replace(/[$,MK]/g, ""));
+        return sum + (text.includes("M") ? n*1000000 : text.includes("K") ? n*1000 : n);
       }, 0);
     }
 
-    function updateCalc() {
-      const give = getTotal(givingList);
-      const receive = getTotal(receivingList);
+    function update() {
+      const give = getWorth(giveItems);
+      const receive = getWorth(receiveItems);
+      giveTotal.textContent = format(give);
+      receiveTotal.textContent = format(receive);
 
-      givingTotal.textContent = format(give);
-      receivingTotal.textContent = format(receive);
-
-      const diff = receive - give;
-      const pct = give === 0 ? 0 : (diff / give) * 100;
-
-      let text = "", color = "";
-      if (give === 0 && receive === 0) {
-        text = "—";
-        color = "#666";
-      } else if (Math.abs(pct) <= 10) {
-        text = "FAIR TRADE";
-        color = "#0f0";
-      } else if (pct > 10) {
-        text = `GOOD TRADE +${pct.toFixed(0)}%`;
-        color = "#0f0";
-      } else if (pct > -25) {
-        text = "SLIGHT OVERPAY";
-        color = "#ff0";
-      } else {
-        text = "BAD TRADE";
-        color = "#f00";
+      if (give + receive === 0) {
+        verdict.textContent = "—";
+        verdict.style.color = "#888";
+        return;
       }
 
-      verdict.textContent = text;
+      const pct = give === 0 ? Infinity : ((receive - give) / give) * 100;
+      let msg, color;
+      if (Math.abs(pct) <= 12) { msg = "FAIR"; color = "#fff"; }
+      else if (pct > 12) { msg = `GOOD +${pct.toFixed(0)}%`; color = "#0f0"; }
+      else if (pct > -30) { msg = "SLIGHT L"; color = "#ff0"; }
+      else { msg = "BAD TRADE"; color = "#f00"; }
+
+      verdict.textContent = msg;
       verdict.style.color = color;
-      verdict.style.textShadow = `0 0 20px ${color}`;
     }
   </script>
 </body>

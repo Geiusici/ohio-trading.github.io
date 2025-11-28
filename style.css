@@ -1,213 +1,123 @@
-* { margin:0; padding:0; box-sizing:border-box; }
-body {
-  background: #0d0d0d;
-  color: #aaa;
-  font-family: 'Share Tech Mono', monospace;
-  background-image: 
-    radial-gradient(circle at top, #111 0%, #000 70%),
-    url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23080808"/><rect x="0" y="0" width="100" height="2" fill="%23202020"/><rect x="0" y="98" width="100" height="2" fill="%23202020"/></svg>');
-  min-height: 100vh;
-  position: relative;
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  background:#000;
+  color:#ddd;
+  font-family:'Share Tech Mono',monospace;
+  min-height:100vh;
+  overflow-x:hidden;
+  position:relative;
 }
 
-/* Flickering ceiling light */
-.ceiling-light {
-  position: fixed;
-  top: 0; left: 50%;
-  width: 600px; height: 300px;
-  margin-left: -300px;
-  background: radial-gradient(circle at center, rgba(255,255,200,0.15) 0%, transparent 70%);
-  pointer-events: none;
-  z-index: 1;
-  animation: lightFlicker 8s infinite;
+/* Dust particles */
+.dust{
+  position:fixed;
+  top:0;left:0;right:0;bottom:0;
+  background:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter><rect width="300" height="300" filter="url(%23noise)" opacity="0.15"/></svg>');
+  pointer-events:none;
+  animation:dust 30s linear infinite;
+  z-index:1;
 }
-.light-flicker {
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: #000;
-  opacity: 0;
-  pointer-events: none;
-  animation: staticFlicker 6s infinite;
+@keyframes dust{0%{background-position:0 0}100%{background-position:300px 300px}}
+
+/* Red emergency light */
+.emergency-light{
+  position:fixed;
+  top:0;left:0;right:0;height:200px;
+  background:radial-gradient(circle at center, rgba(100,0,0,0.15) 0%, transparent 70%);
+  pointer-events:none;
+  z-index:2;
 }
 
-/* Realistic fluorescent flicker */
-@keyframes lightFlicker {
-  0%, 100% { opacity: 0.15; }
-  2% { opacity: 0.05; }
-  4% { opacity: 0.18; }
-  6% { opacity: 0.08; }
-  8% { opacity: 0.16; }
+/* Title */
+.header{text-align:center;padding:4rem 0 2rem;position:relative;z-index:10}
+.title{
+  font-family:'Orbitron',sans-serif;
+  font-size:4rem;
+  color:#fff;
+  text-shadow:0 0 20px #f00, 0 0 40px #f00;
+  letter-spacing:8px;
 }
-@keyframes staticFlicker {
-  0%, 100% { opacity: 0; }
-  3%, 3.5%, 7% { opacity: 0.04; }
-}
-
-/* Title sign hanging from ceiling */
-.bunker-header {
-  text-align: center;
-  padding: 4rem 0 2rem;
-  position: relative;
-  z-index: 10;
-}
-.sign {
-  display: inline-block;
-  background: #111;
-  border: 3px solid #333;
-  padding: 1.5rem 3rem;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.8);
-  position: relative;
-}
-.sign::before {
-  content: "";
-  position: absolute;
-  top: -30px; left: 50%;
-  width: 4px; height: 40px;
-  background: #444;
-  margin-left: -2px;
-}
-.title {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 3.2rem;
-  color: #0f0;
-  text-shadow: 0 0 20px #0f0;
-  letter-spacing: 6px;
-}
-.subtitle {
-  color: #666;
-  font-size: 0.9rem;
-  letter-spacing: 4px;
-  margin-top: 0.5rem;
+.subtitle{
+  color:#666;
+  letter-spacing:4px;
+  margin-top:0.5rem;
 }
 
 /* Tabs */
-.tabs {
-  display: flex;
-  justify-content: center;
-  gap: 3rem;
-  margin: 2rem 0;
+.tabs{
+  display:flex;justify-content:center;gap:3rem;margin:2rem 0;
 }
-.tab {
-  background: #111;
-  border: 2px solid #0f0;
-  color: #0f0;
-  padding: 1rem 2.5rem;
-  font-family: 'Orbitron';
-  cursor: pointer;
-  transition: 0.3s;
+.tab{
+  background:#111;border:2px solid #555;color:#aaa;
+  padding:1rem 2rem;font-family:'Orbitron';cursor:pointer;
+  transition:0.3s;
 }
-.tab.active, .tab:hover {
-  background: #0f0;
-  color: #000;
-  box-shadow: 0 0 20px #0f0;
+.tab.active,.tab:hover{
+  background:#fff;color:#000;border-color:#fff;
 }
 
 /* Search */
-.search-box {
-  text-align: center;
-  margin: 2rem 0;
-}
-#search {
-  background: #111;
-  border: 2px solid #0f0;
-  color: #0f0;
-  padding: 1rem 2rem;
-  width: 70%;
-  max-width: 600px;
-  font-size: 1.1rem;
+.search{text-align:center;margin:2rem 0}
+#search{
+  background:#111;border:2px solid #555;color:#fff;
+  padding:1rem 2rem;width:70%;max-width:600px;font-size:1.1rem;
 }
 
-/* Cards */
-.bunker-content { max-width: 1400px; margin: 0 auto; padding: 0 1rem; }
-.category { margin: 4rem 0; }
-.cat-header {
-  font-family: 'Orbitron';
-  font-size: 2rem;
-  color: #0f0;
-  text-shadow: 0 0 10px #0f0;
-  margin-bottom: 1.5rem;
+/* Vault */
+#content{max-width:1400px;margin:0 auto;padding:0 1rem}
+.category{margin:4rem 0}
+.category h2{
+  font-family:'Orbitron';font-size:2rem;color:#fff;
+  border-bottom:2px solid #333;padding-bottom:0.5rem;
 }
-.count { color: #666; font-size: 1rem; }
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 1.5rem;
+.category h2 span{color:#666;font-size:1rem}
+.grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5rem;margin-top:1rem;
 }
-.card {
-  background: #111;
-  border: 1px solid #333;
-  padding: 1.5rem;
-  transition: 0.3s;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+.card{
+  background:#111;border:1px solid #333;padding:1.5rem;
+  transition:0.3s;box-shadow:0 4px 10px rgba(0,0,0,0.6);
 }
-.card:hover {
-  border-color: #0f0;
-  box-shadow: 0 0 20px rgba(0,255,0,0.4);
-  transform: translateY(-5px);
+.card:hover{
+  border-color:#fff;transform:translateY(-5px);
+  box-shadow:0 10px 30px rgba(255,255,255,0.1);
 }
-.name { color: #0f0; font-size: 1.1rem; margin-bottom: 0.8rem; }
-.value { font-size: 1.8rem; color: #0f0; font-weight: bold; }
-.demand { margin-top: 0.5rem; }
-.demand .high { color: #0f0; }
-.demand .med { color: #ff0; }
-.demand .low { color: #f0f; }
-.demand .unknown { color: #666; }
+.name{color:#fff;font-weight:bold;margin-bottom:0.8rem}
+.value{font-size:1.8rem;color:#fff;margin:0.5rem 0}
+.demand{color:#aaa}
 
 /* Calculator */
-.calculator-grid {
-  display: grid;
-  grid-template-columns: 1fr 100px 1fr;
-  gap: 2rem;
-  max-width: 1200px;
-  margin: 3rem auto;
-  padding: 2rem;
+.calc-container{
+  display:grid;grid-template-columns:1fr 100px 1fr;gap:2rem;
+  max-width:1200px;margin:3rem auto;padding:2rem;
 }
-.side {
-  background: #111;
-  border: 2px solid #333;
-  padding: 1.5rem;
+.side{
+  background:#111;border:2px solid #333;padding:1.5rem;min-height:500px;
 }
-.side h2 {
-  color: #0f0;
-  text-align: center;
-  font-family: 'Orbitron';
-  margin-bottom: 1rem;
+.side h2{
+  text-align:center;color:#fff;font-family:'Orbitron';margin-bottom:1rem;
 }
-.total {
-  text-align: center;
-  font-size: 1.8rem;
-  color: #0f0;
-  margin-top: 1rem;
-  font-weight: bold;
+#giving-items,#receive-items{min-height:300px}
+.item{
+  display:flex;justify-content:space-between;align-items:center;
+  background:#222;padding:0.8rem;margin:0.5rem 0;
+  border-left:4px solid #555;
 }
-.add-skin {
-  width: 100%;
-  background: #000;
-  border: 1px solid #0f0;
-  color: #0f0;
-  padding: 1rem;
-  margin-top: 1rem;
+.item button{
+  background:none;border:none;color:#f66;font-size:1.5rem;cursor:pointer;
 }
-.trade-item {
-  background: rgba(0,255,0,0.1);
-  padding: 0.8rem;
-  margin: 0.5rem 0;
-  display: flex;
-  justify-content: space-between;
-  border-left: 4px solid #0f0;
+.total{
+  text-align:center;margin-top:1rem;font-size:1.5rem;color:#aaa;
 }
-.remove { background:none; border:none; color:#f00; font-size:1.5rem; cursor:pointer; }
-.arrow { font-size: 4rem; color: #666; display:flex; align-items:center; justify-content:center; }
-.verdict {
-  text-align: center;
-  font-family: 'Orbitron';
-  font-size: 3rem;
-  margin: 3rem 0;
-  text-transform: uppercase;
+.total span{color:#fff;font-weight:bold}
+input[type="text"]{
+  width:100%;background:#000;border:1px solid #555;
+  color:#fff;padding:1rem;margin-top:1rem;
 }
-.bunker-footer {
-  text-align: center;
-  padding: 4rem 1rem 2rem;
-  color: #444;
-  font-size: 0.9rem;
+.vs{
+  font-size:4rem;color:#666;display:flex;align-items:center;justify-content:center;
+}
+#verdict{
+  text-align:center;font-family:'Orbitron';font-size:3.5rem;
+  margin:3rem 0;text-transform:uppercase;color:#888;
 }

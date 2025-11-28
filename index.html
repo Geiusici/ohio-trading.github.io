@@ -10,11 +10,11 @@
 <body>
 
   <!-- Particles -->
-  <div id="particles"></div>
+  <canvas id="particle-canvas"></canvas>
 
   <!-- Header -->
   <header class="header">
-    <h1 class="logo">OHIO TRADING & EXCHANGE CO.</h1>
+    <h1 class="logo flicker">OHIO TRADING & EXCHANGE CO.</h1>
     <p class="tagline">CLASSIFIED VAULT • 28 NOV 2025</p>
   </header>
 
@@ -63,7 +63,6 @@
 
   <script src="skins.js"></script>
   <script>
-    // Use your embeddedSkins array from skins.js
     const skins = embeddedSkins || [];
     const vaultContent = document.getElementById("vault-content");
     const searchInput = document.getElementById("search");
@@ -90,133 +89,144 @@
     const leftovers = skins.filter(s => !used.has(s.name));
     if (leftovers.length) groups.push({name: "Limited / Event", items: leftovers});
 
-    function format(v) {
-      if (v === 0) return "Unrated";
-      if (v >= 1000000) return "$" + (v/1000000).toFixed(1) + "M";
-      if (v >= 1000) return "$" + Math.floor(v/1000) + "K";
-      return "$" + v;
+    function format(v){
+      if(v===0) return "Unrated";
+      if(v>=1000000) return "$"+(v/1000000).toFixed(1)+"M";
+      if(v>=1000) return "$"+Math.floor(v/1000)+"K";
+      return "$"+v;
     }
 
-    function renderVault() {
+    function renderVault(){
       const q = searchInput.value.toLowerCase();
-      vaultContent.innerHTML = "";
-      let foundAny = false;
-      groups.forEach(g => {
-        const filtered = g.items.filter(s => s.name.toLowerCase().includes(q));
-        if (!filtered.length) return;
-        foundAny = true;
-        vaultContent.innerHTML += `
+      vaultContent.innerHTML="";
+      let foundAny=false;
+      groups.forEach(g=>{
+        const filtered=g.items.filter(s=>s.name.toLowerCase().includes(q));
+        if(!filtered.length) return;
+        foundAny=true;
+        vaultContent.innerHTML+=`
           <div class="category">
             <h2 class="cat-title">${g.name} <span>[${filtered.length}]</span></h2>
             <div class="cards">
-              ${filtered.map(s => `
+              ${filtered.map(s=>`
                 <div class="card animate">
                   <div class="name">${s.name}</div>
                   <div class="value">${format(s.worth)}</div>
-                  <div class="demand">DEMAND: ${s.demand === "?" ? "???" : s.demand+"/10"}</div>
+                  <div class="demand">DEMAND: ${s.demand==="?"?"???":s.demand+"/10"}</div>
                 </div>
               `).join("")}
             </div>
           </div>
         `;
       });
-      if(!foundAny) vaultContent.innerHTML = "<p style='text-align:center;color:#aaa;margin-top:50px'>No skins found</p>";
+      if(!foundAny) vaultContent.innerHTML="<p style='text-align:center;color:#aaa;margin-top:50px'>No skins found</p>";
     }
 
     searchInput.addEventListener("input", renderVault);
     renderVault();
 
     // === TRADE CALCULATOR ===
-    const giveInput = document.getElementById("give-input");
-    const receiveInput = document.getElementById("receive-input");
-    const giveDropdown = document.getElementById("give-dropdown");
-    const receiveDropdown = document.getElementById("receive-dropdown");
-    const giveItems = document.getElementById("giving-items");
-    const receiveItems = document.getElementById("receiving-items");
-    const giveTotal = document.getElementById("give-total");
-    const receiveTotal = document.getElementById("receive-total");
-    const verdict = document.getElementById("verdict");
+    const giveInput=document.getElementById("give-input");
+    const receiveInput=document.getElementById("receive-input");
+    const giveDropdown=document.getElementById("give-dropdown");
+    const receiveDropdown=document.getElementById("receive-dropdown");
+    const giveItems=document.getElementById("giving-items");
+    const receiveItems=document.getElementById("receiving-items");
+    const giveTotal=document.getElementById("give-total");
+    const receiveTotal=document.getElementById("receive-total");
+    const verdict=document.getElementById("verdict");
 
-    function showDropdown(input, dropdown){
-      const val = input.value.toLowerCase();
-      if(!val){ dropdown.innerHTML=""; dropdown.style.display="none"; return; }
-      const matches = skins.filter(s => s.name.toLowerCase().includes(val)).slice(0,8);
-      dropdown.innerHTML = matches.map(s => `<div class="option" data-name="${s.name}" data-worth="${s.worth}">${s.name} <span>(${format(s.worth)})</span></div>`).join("");
-      dropdown.style.display = matches.length?"block":"none";
+    function showDropdown(input,dropdown){
+      const val=input.value.toLowerCase();
+      if(!val){dropdown.innerHTML="";dropdown.style.display="none";return;}
+      const matches=skins.filter(s=>s.name.toLowerCase().includes(val)).slice(0,8);
+      dropdown.innerHTML=matches.map(s=>`<div class="option" data-name="${s.name}" data-worth="${s.worth}">${s.name} <span>(${format(s.worth)})</span></div>`).join("");
+      dropdown.style.display=matches.length?"block":"none";
     }
 
-    function addSkin(name, worth, container){
-      const div = document.createElement("div");
+    function addSkin(name,worth,container){
+      const div=document.createElement("div");
       div.className="trade-item";
       div.innerHTML=`<span>${name}</span><span>${format(worth)}</span><button>×</button>`;
-      div.querySelector("button").onclick = ()=>{ div.remove(); update(); };
+      div.querySelector("button").onclick=()=>{div.remove();update();}
       container.appendChild(div);
       update();
     }
 
-    [giveInput, receiveInput].forEach(input=>{
-      const dropdown = input.id.includes("give") ? giveDropdown : receiveDropdown;
-      input.addEventListener("input", ()=>showDropdown(input, dropdown));
-      input.addEventListener("keydown", e=>{
+    function setupInput(input,dropdown,container){
+      input.addEventListener("input",()=>showDropdown(input,dropdown));
+      input.addEventListener("keydown",e=>{
         if(e.key==="Enter" && input.value){
-          const match = skins.find(s=>s.name.toLowerCase()===input.value.toLowerCase());
-          if(match){
-            addSkin(match.name, match.worth, input.id.includes("give") ? giveItems : receiveItems);
-            input.value=""; dropdown.innerHTML=""; dropdown.style.display="none";
-          }
+          const match=skins.find(s=>s.name.toLowerCase()===input.value.toLowerCase());
+          if(match){addSkin(match.name,match.worth,container);input.value="";dropdown.innerHTML="";dropdown.style.display="none";}
         }
       });
-    });
+    }
 
-    document.addEventListener("click", e=>{
+    setupInput(giveInput,giveDropdown,giveItems);
+    setupInput(receiveInput,receiveDropdown,receiveItems);
+
+    document.addEventListener("click",e=>{
       if(e.target.classList.contains("option")){
-        const name = e.target.dataset.name;
-        const worth = parseInt(e.target.dataset.worth);
-        const container = e.target.closest("#calc").querySelector(e.target.closest(".input-wrapper").previousElementSibling.id==="giving-items"?giveItems:receiveItems);
-        addSkin(name, worth, container);
-        giveInput.value = receiveInput.value = "";
-        giveDropdown.innerHTML = receiveDropdown.innerHTML = "";
-        giveDropdown.style.display = receiveDropdown.style.display = "none";
+        const name=e.target.dataset.name;
+        const worth=parseInt(e.target.dataset.worth);
+        const container=e.target.closest(".input-wrapper").previousElementSibling;
+        addSkin(name,worth,container);
+        giveInput.value=receiveInput.value="";
+        giveDropdown.innerHTML=receiveDropdown.innerHTML="";
+        giveDropdown.style.display=receiveDropdown.style.display="none";
       }
     });
 
     function getTotal(container){
       return Array.from(container.children).reduce((sum,el)=>{
-        const val = el.children[1].textContent;
+        const val=el.children[1].textContent;
         if(val==="Unrated") return sum;
-        const n = parseFloat(val.replace(/[$,MK]/g,""));
-        return sum + (val.includes("M")? n*1000000 : val.includes("K")? n*1000 : n);
+        const n=parseFloat(val.replace(/[$,MK]/g,""));
+        return sum+(val.includes("M")?n*1000000:val.includes("K")?n*1000:n);
       },0);
     }
 
     function update(){
-      const give = getTotal(giveItems);
-      const receive = getTotal(receiveItems);
-      giveTotal.textContent = format(give);
-      receiveTotal.textContent = format(receive);
-      if(give+receive===0){ verdict.textContent="—"; verdict.style.color="#888"; return; }
-      const pct = give===0?999:((receive-give)/give)*100;
+      const give=getTotal(giveItems);
+      const receive=getTotal(receiveItems);
+      giveTotal.textContent=format(give);
+      receiveTotal.textContent=format(receive);
+      if(give+receive===0){verdict.textContent="—";verdict.style.color="#888";return;}
+      const pct=give===0?999:((receive-give)/give)*100;
       let msg,color;
-      if(Math.abs(pct)<=12){ msg="FAIR TRADE"; color="#fff"; }
-      else if(pct>12){ msg=`WIN +${pct.toFixed(0)}%`; color="#0f0"; }
-      else if(pct>-35){ msg="SLIGHT L"; color="#ff0"; }
-      else{ msg="SCAM / BAD"; color="#f00"; }
-      verdict.textContent = msg;
+      if(Math.abs(pct)<=12){msg="FAIR TRADE";color="#fff";}
+      else if(pct>12){msg=`WIN +${pct.toFixed(0)}%`;color="#0f0";}
+      else if(pct>-35){msg="SLIGHT L";color="#ff0";}
+      else{msg="SCAM / BAD";color="#f00";}
+      verdict.textContent=msg;
       verdict.style.color=color;
       verdict.style.textShadow=`0 0 20px ${color}`;
     }
 
-    // Particles
-    const particles = document.getElementById("particles");
-    for(let i=0;i<80;i++){
-      const p = document.createElement("div");
-      p.className="particle";
-      p.style.left=Math.random()*100+"vw";
-      p.style.animationDelay=Math.random()*20+"s";
-      p.style.animationDuration=(Math.random()*20+20)+"s";
-      particles.appendChild(p);
+    // === Particles ===
+    const canvas=document.getElementById("particle-canvas");
+    const ctx=canvas.getContext("2d");
+    canvas.width=window.innerWidth;
+    canvas.height=window.innerHeight;
+    const particlesArr=[];
+    for(let i=0;i<100;i++){
+      particlesArr.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*2+1,speed:Math.random()*0.5+0.2});
     }
+    function animateParticles(){
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      particlesArr.forEach(p=>{
+        p.y+=p.speed;
+        if(p.y>canvas.height) p.y=0;
+        ctx.beginPath();
+        ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+        ctx.fillStyle="rgba(255,255,255,0.15)";
+        ctx.fill();
+      });
+      requestAnimationFrame(animateParticles);
+    }
+    animateParticles();
+    window.addEventListener("resize",()=>{canvas.width=window.innerWidth;canvas.height=window.innerHeight;});
   </script>
-
 </body>
 </html>

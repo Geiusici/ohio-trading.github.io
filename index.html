@@ -1,66 +1,277 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Ohio Trading & Exchange Co.</title>
-<link rel="stylesheet" href="style.css" />
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Ohio Trading & Exchange Co.</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-<div class="crt-overlay"></div>
-<header class="neo-header">
-<h1>OHIO TRADING & EXCHANGE CO.</h1>
-<p>SECTOR 7 VAULT — 28 NOV 2025</p>
-</header>
 
+  <!-- Background / particles (kept for script) -->
+  <div id="particles" aria-hidden="true"></div>
+  <div class="ash" aria-hidden="true"></div>
+  <div class="beacon" aria-hidden="true"></div>
 
-<nav class="neo-nav">
-<button class="nav-btn active" data-page="vault">VAULT</button>
-<button class="nav-btn" data-page="calc">TRADE CALCULATOR</button>
-</nav>
+  <!-- Header -->
+  <header class="header">
+    <h1 class="logo">OHIO TRADING &amp; EXCHANGE CO.</h1>
+    <p class="tagline">CLASSIFIED VAULT • 28 NOV 2025</p>
+  </header>
 
+  <!-- Navigation -->
+  <nav class="nav" role="navigation" aria-label="Main">
+    <button class="nav-btn active" data-page="vault">VAULT</button>
+    <button class="nav-btn" data-page="calc">TRADE CALCULATOR</button>
+  </nav>
 
-<section id="vault" class="page active">
-<div class="neo-search"><input id="search" placeholder="SEARCH 758+ SKINS..." autocomplete="off" /></div>
-<div id="vault-content"></div>
-</section>
+  <!-- VAULT PAGE -->
+  <main>
+    <section id="vault" class="page active">
+      <div class="search-bar">
+        <input type="text" id="search" placeholder="SEARCH 758+ SKINS..." autocomplete="off">
+      </div>
+      <div id="vault-content" class="vault-content"></div>
+    </section>
 
+    <!-- TRADE CALCULATOR PAGE -->
+    <section id="calc" class="page">
+      <div class="calc-title">TRADE ANALYZER</div>
+      <div class="calculator">
+        <div class="trade-side giving">
+          <h2>GIVING</h2>
+          <div class="items" id="giving-items"></div>
+          <div class="input-wrapper">
+            <input type="text" id="give-input" placeholder="Type skin name..." autocomplete="off">
+            <div class="dropdown" id="give-dropdown"></div>
+          </div>
+          <div class="total">TOTAL: <span id="give-total">$0</span></div>
+        </div>
 
-<section id="calc" class="page">
-<h2 class="calc-header">TRADE ANALYZER</h2>
-<div class="calc-grid">
-<div class="side">
-<h3>GIVING</h3>
-<div id="giving-items" class="item-list"></div>
-<div class="input-wrap">
-<input id="give-input" placeholder="Type skin name..." autocomplete="off" />
-<div id="give-dropdown" class="dropdown"></div>
-</div>
-<div class="total">TOTAL: <span id="give-total">$0</span></div>
-</div>
+        <div class="vs">⟷</div>
 
+        <div class="trade-side receiving">
+          <h2>RECEIVING</h2>
+          <div class="items" id="receiving-items"></div>
+          <div class="input-wrapper">
+            <input type="text" id="receive-input" placeholder="Type skin name..." autocomplete="off">
+            <div class="dropdown" id="receive-dropdown"></div>
+          </div>
+          <div class="total">TOTAL: <span id="receive-total">$0</span></div>
+        </div>
+      </div>
+      <div id="verdict">—</div>
+    </section>
+  </main>
 
-<div class="versus">⟷</div>
+  <!-- your skins data -->
+  <script src="skins.js"></script>
 
+  <!-- main logic (keeps your original script logic unchanged) -->
+  <script>
+    // preserve existing skins array variable name (skins.js should set embeddedSkins or a global)
+    const skins = window.embeddedSkins || [];
 
-<div class="side">
-<h3>RECEIVING</h3>
-<div id="receiving-items" class="item-list"></div>
-<div class="input-wrap">
-<input id="receive-input" placeholder="Type skin name..." autocomplete="off" />
-<div id="receive-dropdown" class="dropdown"></div>
-</div>
-<div class="total">TOTAL: <span id="receive-total">$0</span></div>
-</div>
-</div>
-<div id="verdict" class="verdict">—</div>
-</section>
+    // --- vault rendering & search ---
+    const vaultContent = document.getElementById("vault-content");
+    const searchInput = document.getElementById("search");
 
+    // Page switching (keeps original logic)
+    document.querySelectorAll(".nav-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
+        document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+        btn.classList.add("active");
+        document.getElementById(btn.dataset.page).classList.add("active");
+        // focus search when opening vault
+        if (btn.dataset.page === "vault") searchInput.focus();
+      });
+    });
 
-<script src="skins.js"></script>
-<script>
-// (same JS logic from your script here — unchanged)
-</script>
+    // Group skins (same categories/order as original)
+    const order = ["Invisible","Obsidian","Dark Matter","Anti Matter","Crimson Bloods","Void Reapers","Underworld","White Ghost","Solid Gold","Gift Wrapped","Christmas Future","Golden Snow","Frozen Gold","Sub Zero","Rainbow Firework","Solid Gold V2","St Patrick","Holy Fire","Bloody Heart","Fallout","Atomic Pumpkin","Ethereal","Spectral","Balloon"];
+    const groups = [];
+    const used = new Set();
+    order.forEach(p => {
+      const list = skins.filter(s => !used.has(s.name) && s.name.includes(p));
+      list.forEach(s => used.add(s.name));
+      if (list.length) groups.push({name: p, items: list});
+    });
+    const leftovers = skins.filter(s => !used.has(s.name));
+    if (leftovers.length) groups.push({name: "Limited / Event", items: leftovers});
+
+    function format(v) {
+      if (v === 0) return "Unrated";
+      if (v >= 1000000) return "$" + (v/1000000).toFixed(1) + "M";
+      if (v >= 1000) return "$" + Math.floor(v/1000) + "K";
+      return "$" + v;
+    }
+
+    function renderVault() {
+      const q = (searchInput.value || "").toLowerCase();
+      vaultContent.innerHTML = "";
+      groups.forEach(g => {
+        const filtered = g.items.filter(s => s.name.toLowerCase().includes(q));
+        if (!filtered.length) return;
+        const cat = document.createElement("div");
+        cat.className = "category";
+        const title = document.createElement("h2");
+        title.className = "cat-title";
+        title.innerHTML = `${g.name} <span>[${filtered.length}]</span>`;
+        cat.appendChild(title);
+
+        const cards = document.createElement("div");
+        cards.className = "cards";
+        filtered.forEach(s => {
+          const card = document.createElement("div");
+          card.className = "card animate";
+          card.innerHTML = `
+            <div class="name">${s.name}</div>
+            <div class="value">${format(s.worth)}</div>
+            <div class="demand">DEMAND: ${s.demand === "?" ? "???" : s.demand + "/10"}</div>
+          `;
+          cards.appendChild(card);
+        });
+
+        cat.appendChild(cards);
+        vaultContent.appendChild(cat);
+      });
+    }
+
+    searchInput.addEventListener("input", renderVault);
+    renderVault();
+
+    // === AUTOCOMPLETE + TRADE CALCULATOR ===
+    const giveInput = document.getElementById("give-input");
+    const receiveInput = document.getElementById("receive-input");
+    const giveDropdown = document.getElementById("give-dropdown");
+    const receiveDropdown = document.getElementById("receive-dropdown");
+    const giveItems = document.getElementById("giving-items");
+    const receiveItems = document.getElementById("receiving-items");
+    const giveTotal = document.getElementById("give-total");
+    const receiveTotal = document.getElementById("receive-total");
+    const verdict = document.getElementById("verdict");
+
+    function showDropdown(input, dropdown) {
+      const val = (input.value || "").toLowerCase().trim();
+      if (!val) { dropdown.innerHTML = ""; dropdown.style.display = "none"; return; }
+      const matches = skins
+        .filter(s => s.name.toLowerCase().includes(val))
+        .slice(0, 8);
+      dropdown.innerHTML = matches.map(s => `
+        <div class="option" data-name="${escapeHtml(s.name)}" data-worth="${s.worth}">
+          ${escapeHtml(s.name)} <span>(${format(s.worth)})</span>
+        </div>
+      `).join("");
+      dropdown.style.display = matches.length ? "block" : "none";
+    }
+
+    function addSkin(name, worth, container) {
+      const div = document.createElement("div");
+      div.className = "trade-item";
+      div.innerHTML = `<span class="tname">${escapeHtml(name)}</span><span class="tval">${format(worth)}</span><button class="remove">×</button>`;
+      div.querySelector("button").onclick = () => { div.remove(); update(); };
+      container.appendChild(div);
+      update();
+    }
+
+    // wire up inputs (keeps original behaviors)
+    [giveInput, receiveInput].forEach(input => {
+      const dropdown = input.id.includes("give") ? giveDropdown : receiveDropdown;
+      input.addEventListener("input", () => showDropdown(input, dropdown));
+      input.addEventListener("keydown", e => {
+        if (e.key === "Enter" && input.value) {
+          const match = skins.find(s => s.name.toLowerCase() === input.value.toLowerCase());
+          if (match) {
+            addSkin(match.name, match.worth, input.id.includes("give") ? giveItems : receiveItems);
+            input.value = "";
+            dropdown.innerHTML = "";
+            dropdown.style.display = "none";
+          }
+        }
+      });
+    });
+
+    // global click handler for dropdown selection
+    document.addEventListener("click", e => {
+      if (e.target.classList.contains("option") || e.target.closest(".option")) {
+        const el = e.target.classList.contains("option") ? e.target : e.target.closest(".option");
+        const name = el.dataset.name;
+        const worth = parseInt(el.dataset.worth, 10) || 0;
+        // determine which side's dropdown this was
+        const parentDropdown = el.closest(".dropdown");
+        const container = parentDropdown && parentDropdown.id.includes("give") ? giveItems : receiveItems;
+        addSkin(name, worth, container);
+        giveInput.value = receiveInput.value = "";
+        giveDropdown.innerHTML = receiveDropdown.innerHTML = "";
+        giveDropdown.style.display = receiveDropdown.style.display = "none";
+      } else {
+        // if click outside input-wrapper, hide dropdowns
+        if (!e.target.closest(".input-wrapper")) {
+          if (giveDropdown) giveDropdown.style.display = "none";
+          if (receiveDropdown) receiveDropdown.style.display = "none";
+        }
+      }
+    });
+
+    function getTotal(container) {
+      return Array.from(container.children).reduce((sum, el) => {
+        const val = el.querySelector(".tval") ? el.querySelector(".tval").textContent : el.children[1].textContent;
+        if (val === "Unrated") return sum;
+        const n = parseFloat(val.replace(/[$,MK]/g, ""));
+        return sum + (val.includes("M") ? n*1000000 : val.includes("K") ? n*1000 : n);
+      }, 0);
+    }
+
+    function update() {
+      const give = getTotal(giveItems);
+      const receive = getTotal(receiveItems);
+      giveTotal.textContent = format(give);
+      receiveTotal.textContent = format(receive);
+
+      if (give + receive === 0) {
+        verdict.textContent = "—";
+        verdict.style.color = "#999";
+        verdict.style.textShadow = "none";
+        return;
+      }
+
+      const pct = give === 0 ? 999 : ((receive - give) / give) * 100;
+      let msg, color;
+      if (Math.abs(pct) <= 12) { msg = "FAIR TRADE"; color = "#fff"; }
+      else if (pct > 12) { msg = `WIN +${pct.toFixed(0)}%`; color = "#0f0"; }
+      else if (pct > -35) { msg = "SLIGHT L"; color = "#ff0"; }
+      else { msg = "SCAM / BAD"; color = "#f00"; }
+
+      verdict.textContent = msg;
+      verdict.style.color = color;
+      verdict.style.textShadow = `0 0 18px ${color}`;
+    }
+
+    // small safe escape (prevents accidental injection from data)
+    function escapeHtml(str) {
+      if (!str) return "";
+      return String(str).replace(/[&<>"']/g, function (m) {
+        return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"})[m];
+      });
+    }
+
+    // Particle system (keeps original DOM-based particles for compatibility with CSS)
+    const particles = document.getElementById("particles");
+    if (particles) {
+      for (let i = 0; i < 80; i++) {
+        const p = document.createElement("div");
+        p.className = "particle";
+        p.style.left = (Math.random() * 100) + "vw";
+        p.style.animationDelay = (Math.random() * 20) + "s";
+        p.style.animationDuration = ((Math.random() * 20) + 20) + "s";
+        particles.appendChild(p);
+      }
+    }
+
+    // expose for debug if needed
+    window.ohioUI = { renderVault, update };
+  </script>
 </body>
 </html>

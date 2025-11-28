@@ -211,20 +211,21 @@
       verdict.style.textShadow=`0 0 20px ${color}`;
     }
 
-    // Particle system
-    const particles = document.getElementById("particles");
-    for(let i=0;i<80;i++){
-      const p=document.createElement("div");
-      p.className="particle";
-      p.style.left=Math.random()*100+"vw";
-      let size = 1 + Math.random()*2;
-      p.style.width = size + "px";
-      p.style.height = size + "px";
-      p.style.opacity = 0.2 + Math.random()*0.8;
-      p.style.animationDelay = Math.random()*5 + "s";
-      p.style.animationDuration = 5 + Math.random()*5 + "s";
-      particles.appendChild(p);
-    }
+// Particle system
+const particles = document.getElementById("particles");
+for(let i=0;i<80;i++){
+  const p=document.createElement("div");
+  p.className="particle";
+  p.style.left=Math.random()*100+"vw";
+  let size = 1 + Math.random()*2;
+  p.style.width = size + "px";
+  p.style.height = size + "px";
+  p.style.opacity = 0.2 + Math.random()*0.8;
+  p.style.animationDelay = Math.random()*5 + "s";
+  p.style.animationDuration = 5 + Math.random()*5 + "s"; // 5-10 seconds
+  particles.appendChild(p);
+}
   </script>
 </body>
 </html>
+
